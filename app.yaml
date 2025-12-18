@@ -1,0 +1,23 @@
+# app.yaml
+# By Nic Weyand!
+# DigitalOcean App Platform spec for argand.org static site
+
+name: argand-static
+region: fra
+domains:
+  - domain: argand.org
+    type: PRIMARY
+  - domain: www.argand.org
+    type: ALIAS
+
+static_sites:
+  - name: argand-landing
+    github:
+      repo: nicweyand/argand-static
+      branch: main
+      deploy_on_push: true
+    source_dir: /
+    index_document: index.html
+    error_document: index.html
+    routes:
+      - path: /
