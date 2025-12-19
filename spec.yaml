@@ -1,0 +1,27 @@
+name: argand-coming-soon
+region: nyc
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
+domains:
+  - domain: argand.org
+    type: PRIMARY
+features:
+  - buildpack-stack=ubuntu-22
+static_sites:
+  - name: argand-landing
+    environment_slug: html
+    github:
+      repo: nicweyand/argand-static
+      branch: main
+      deploy_on_push: true
+    source_dir: /
+    index_document: index.html
+    error_document: index.html
+ingress:
+  rules:
+    - component:
+        name: argand-landing
+      match:
+        path:
+          prefix: /

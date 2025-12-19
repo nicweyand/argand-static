@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <!-- index.html -->
 <!-- By Nic Weyand! -->
-<!-- Argand Coming Soon - Cartographic Precision Design System -->
+<!-- Argand Coming Soon - Volcanic Precision with Flame Hashira Energy -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Argand — Precision Search</title>
-    <meta name="description" content="Argand: Search with precision. Maps, weather, discovery—all built on a foundation of privacy.">
-    <meta name="theme-color" content="#1a3a4a">
+    <title>Argand — Volcanic Precision Search</title>
+    <meta name="description" content="Argand: Search with volcanic precision. Maps, weather, discovery—all built on a foundation of privacy.">
+    <meta name="theme-color" content="#0a0a0f">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Argand — Precision Search">
-    <meta property="og:description" content="Search with precision. Privacy as bedrock.">
+    <meta property="og:title" content="Argand — Volcanic Precision Search">
+    <meta property="og:description" content="Search with volcanic precision. Privacy as bedrock.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://argand.org">
 
-    <!-- Favicon - Compass Rose -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%231a3a4a'/%3E%3Cpath d='M50 10 L55 45 L50 50 L45 45 Z' fill='%23c9a962'/%3E%3Cpath d='M90 50 L55 55 L50 50 L55 45 Z' fill='%23c9a962'/%3E%3Cpath d='M50 90 L45 55 L50 50 L55 55 Z' fill='%23a68b4b'/%3E%3Cpath d='M10 50 L45 45 L50 50 L45 55 Z' fill='%23a68b4b'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23c45c4a'/%3E%3C/svg%3E">
+    <!-- Favicon - Flame Compass -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ff6b35'/%3E%3Cstop offset='100%25' stop-color='%23c9a962'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='%230f1419'/%3E%3Cpath d='M50 10 L55 45 L50 50 L45 45 Z' fill='url(%23fg)'/%3E%3Cpath d='M90 50 L55 55 L50 50 L55 45 Z' fill='url(%23fg)'/%3E%3Cpath d='M50 90 L45 55 L50 50 L55 55 Z' fill='%23c9a962'/%3E%3Cpath d='M10 50 L45 45 L50 50 L45 55 Z' fill='%23c9a962'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23ff6b35'/%3E%3C/svg%3E">
 
     <style>
         /* ═══════════════════════════════════════════════════════════════════════
@@ -53,46 +53,42 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           ARGAND DESIGN TOKENS - Cartographic Precision
+           VOLCANIC PRECISION DESIGN TOKENS - Flame Hashira Inspired
            ═══════════════════════════════════════════════════════════════════════ */
         :root {
-            /* Primary - Deep Prussian Blue */
-            --argand-primary: #1a3a4a;
-            --argand-primary-dark: #0f2634;
-            --argand-primary-light: #2d5a6e;
+            /* Volcanic Depths */
+            --volcanic-obsidian: #0a0a0f;
+            --volcanic-coal: #0f1419;
+            --volcanic-ash: #1a1f2e;
+            --volcanic-smoke: #2a3142;
 
-            /* Secondary - Warm Sepia Gold */
-            --argand-secondary: #c9a962;
-            --argand-secondary-dark: #a68b4b;
-            --argand-secondary-light: #dfc98a;
+            /* Flame Gradients */
+            --flame-core: #ff6b35;
+            --flame-mid: #ff8c42;
+            --flame-edge: #ffa726;
+            --flame-glow: #ffcc80;
 
-            /* Accent - Compass Rose Red */
-            --argand-accent: #c45c4a;
-            --argand-accent-dark: #a24538;
-            --argand-accent-light: #e07a6a;
+            /* Sepia Gold (Cartographic Heritage) */
+            --gold-deep: #c9a962;
+            --gold-bright: #dfc98a;
+            --gold-muted: #a68b4b;
 
-            /* Functional */
-            --argand-success: #4a8c6a;
-            --argand-info: #5a8aad;
-
-            /* Backgrounds - Paper-like warmth */
-            --argand-bg: #faf8f4;
-            --argand-bg-secondary: #f5f2eb;
-            --argand-bg-tertiary: #ebe7de;
+            /* Ember Accents */
+            --ember-red: #e85d4c;
+            --ember-orange: #f4722b;
 
             /* Text */
-            --argand-text: #1a2a32;
-            --argand-text-secondary: #4a5a62;
-            --argand-text-muted: #7a8a92;
-            --argand-text-inverse: #faf8f4;
+            --text-primary: #f5f2eb;
+            --text-secondary: #b8b5ae;
+            --text-muted: #7a7872;
 
-            /* Borders */
-            --argand-border: #e5e0d5;
-            --argand-border-dark: #d5cfc2;
+            /* Functional */
+            --success: #5fa882;
+            --success-glow: rgba(95, 168, 130, 0.2);
 
             /* Animation */
-            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-volcanic: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease-flame: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         *, *::before, *::after {
@@ -107,8 +103,8 @@
 
         body {
             font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
-            background: var(--argand-bg);
-            color: var(--argand-text);
+            background: var(--volcanic-obsidian);
+            color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.6;
@@ -118,93 +114,150 @@
         }
 
         ::selection {
-            background-color: rgba(201, 169, 98, 0.25);
-            color: var(--argand-text);
+            background-color: rgba(255, 107, 53, 0.35);
+            color: var(--text-primary);
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           CARTOGRAPHIC GRID BACKGROUND
+           VOLCANIC BACKGROUND - Heat Shimmer Effect
            ═══════════════════════════════════════════════════════════════════════ */
-        .bg-grid {
+        .volcanic-bg {
             position: fixed;
             inset: 0;
             z-index: 0;
-            background-image:
-                linear-gradient(rgba(26, 58, 74, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(26, 58, 74, 0.04) 1px, transparent 1px);
-            background-size: 32px 32px;
+            background:
+                radial-gradient(ellipse 100% 80% at 80% 120%, rgba(255, 107, 53, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 50% at 20% 80%, rgba(201, 169, 98, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 60% at 60% 0%, rgba(255, 140, 66, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, var(--volcanic-obsidian) 0%, var(--volcanic-coal) 100%);
             pointer-events: none;
         }
 
-        /* Subtle noise texture */
-        .bg-noise {
+        /* Cartographic Grid */
+        .precision-grid {
             position: fixed;
             inset: 0;
             z-index: 1;
-            opacity: 0.025;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-image:
+                linear-gradient(rgba(201, 169, 98, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201, 169, 98, 0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
             pointer-events: none;
         }
 
+        /* Heat shimmer overlay */
+        .heat-shimmer {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.015;
+            pointer-events: none;
+            animation: shimmer 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateY(0) scale(1); opacity: 0.015; }
+            100% { transform: translateY(-2%) scale(1.02); opacity: 0.02; }
+        }
+
         /* ═══════════════════════════════════════════════════════════════════════
-           ARGAND DIAGRAM - Animated Complex Plane
+           ARGAND DIAGRAM - Dramatic Complex Plane
            ═══════════════════════════════════════════════════════════════════════ */
         .argand-diagram {
             position: fixed;
-            right: -10%;
+            right: -5%;
             top: 50%;
             transform: translateY(-50%);
-            width: 600px;
-            height: 600px;
-            z-index: 2;
-            opacity: 0.12;
+            width: 700px;
+            height: 700px;
+            z-index: 3;
+            opacity: 0.25;
             pointer-events: none;
+            animation: diagram-breathe 6s ease-in-out infinite;
+        }
+
+        @keyframes diagram-breathe {
+            0%, 100% { opacity: 0.2; transform: translateY(-50%) scale(1); }
+            50% { opacity: 0.3; transform: translateY(-50%) scale(1.02); }
         }
 
         .argand-diagram svg {
             width: 100%;
             height: 100%;
+            filter: drop-shadow(0 0 60px rgba(255, 107, 53, 0.15));
         }
 
         .axis-line {
-            stroke: var(--argand-primary);
-            stroke-width: 1.5;
+            stroke: var(--gold-deep);
+            stroke-width: 2;
         }
 
         .grid-line {
-            stroke: var(--argand-primary);
+            stroke: var(--gold-muted);
             stroke-width: 0.5;
             opacity: 0.3;
         }
 
-        .point {
-            fill: var(--argand-accent);
-            animation: orbit 12s linear infinite;
-            transform-origin: 300px 300px;
+        .unit-circle {
+            fill: none;
+            stroke: var(--gold-deep);
+            stroke-width: 1.5;
+            stroke-dasharray: 8 4;
+            opacity: 0.5;
+            animation: circle-rotate 30s linear infinite;
+            transform-origin: 350px 350px;
         }
 
-        .point-2 { animation-delay: -3s; }
-        .point-3 { animation-delay: -6s; }
-        .point-4 { animation-delay: -9s; }
+        @keyframes circle-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
-        @keyframes orbit {
-            from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
-            to { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+        .flame-point {
+            fill: var(--flame-core);
+            filter: drop-shadow(0 0 8px var(--flame-core));
+            animation: orbit-flame 10s linear infinite;
+            transform-origin: 350px 350px;
+        }
+
+        .flame-point-2 {
+            fill: var(--flame-mid);
+            animation-delay: -2.5s;
+            animation-duration: 8s;
+        }
+        .flame-point-3 {
+            fill: var(--flame-edge);
+            animation-delay: -5s;
+            animation-duration: 12s;
+        }
+        .flame-point-4 {
+            fill: var(--gold-bright);
+            animation-delay: -7.5s;
+            animation-duration: 15s;
+        }
+
+        @keyframes orbit-flame {
+            from { transform: rotate(0deg) translateX(140px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(140px) rotate(-360deg); }
         }
 
         .pulse-ring {
             fill: none;
-            stroke: var(--argand-secondary);
+            stroke: var(--flame-core);
             stroke-width: 2;
-            animation: pulse-expand 4s ease-out infinite;
+            animation: pulse-volcanic 3s ease-out infinite;
             transform-origin: center;
         }
 
-        .pulse-ring-2 { animation-delay: -2s; }
+        .pulse-ring-2 {
+            stroke: var(--gold-deep);
+            animation-delay: -1.5s;
+        }
 
-        @keyframes pulse-expand {
-            0% { r: 20; opacity: 0.8; }
-            100% { r: 200; opacity: 0; }
+        @keyframes pulse-volcanic {
+            0% { r: 30; opacity: 0.8; }
+            100% { r: 250; opacity: 0; }
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
@@ -227,56 +280,77 @@
             justify-content: space-between;
             align-items: center;
             opacity: 0;
-            animation: fadeSlideDown 0.8s var(--ease-out-expo) 0.2s forwards;
+            animation: fadeSlideDown 0.8s var(--ease-volcanic) 0.2s forwards;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            font-size: 1.5rem;
+            gap: 0.875rem;
+            font-size: 1.625rem;
             font-weight: 700;
-            color: var(--argand-primary);
+            color: var(--text-primary);
             text-decoration: none;
             letter-spacing: -0.02em;
+            transition: all 0.3s var(--ease-volcanic);
+        }
+
+        .logo:hover {
+            color: var(--flame-core);
         }
 
         .logo-icon {
-            width: 36px;
-            height: 36px;
+            width: 44px;
+            height: 44px;
+            filter: drop-shadow(0 0 12px rgba(255, 107, 53, 0.4));
+            animation: flame-dance 2s ease-in-out infinite;
+        }
+
+        @keyframes flame-dance {
+            0%, 100% {
+                filter: drop-shadow(0 0 12px rgba(255, 107, 53, 0.4));
+                transform: scale(1);
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.6));
+                transform: scale(1.05);
+            }
         }
 
         .status-badge {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--argand-bg-secondary);
-            border: 1px solid var(--argand-border);
+            gap: 0.625rem;
+            padding: 0.625rem 1.25rem;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(201, 169, 98, 0.05) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.25);
             border-radius: 100px;
             font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--argand-text-secondary);
+            font-weight: 600;
+            color: var(--flame-glow);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--argand-accent);
+            width: 10px;
+            height: 10px;
+            background: var(--flame-core);
             border-radius: 50%;
-            animation: flame-pulse 1.5s ease-in-out infinite;
+            animation: flame-pulse 1.2s ease-in-out infinite;
+            box-shadow: 0 0 12px var(--flame-core);
         }
 
         @keyframes flame-pulse {
             0%, 100% {
                 opacity: 1;
                 transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(196, 92, 74, 0.4);
+                box-shadow: 0 0 8px var(--flame-core), 0 0 16px rgba(255, 107, 53, 0.5);
             }
             50% {
-                opacity: 0.7;
-                transform: scale(1.2);
-                box-shadow: 0 0 12px 4px rgba(196, 92, 74, 0.2);
+                opacity: 0.8;
+                transform: scale(1.3);
+                box-shadow: 0 0 16px var(--flame-core), 0 0 32px rgba(255, 107, 53, 0.3);
             }
         }
 
@@ -289,33 +363,37 @@
             flex-direction: column;
             justify-content: center;
             padding: 4rem 3rem;
-            max-width: 800px;
+            max-width: 850px;
         }
 
         .tagline {
             font-size: 0.875rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--argand-secondary-dark);
-            margin-bottom: 1rem;
+            letter-spacing: 0.2em;
+            color: var(--flame-core);
+            margin-bottom: 1.25rem;
             opacity: 0;
-            animation: fadeSlideUp 0.6s var(--ease-out-expo) 0.4s forwards;
+            animation: fadeSlideUp 0.6s var(--ease-volcanic) 0.4s forwards;
+            text-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
         }
 
         h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-size: clamp(2.75rem, 7vw, 4.5rem);
             font-weight: 700;
-            line-height: 1.1;
-            color: var(--argand-primary);
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
+            line-height: 1.05;
+            color: var(--text-primary);
+            margin-bottom: 1.75rem;
+            letter-spacing: -0.03em;
             opacity: 0;
-            animation: fadeSlideUp 0.8s var(--ease-out-expo) 0.5s forwards;
+            animation: fadeSlideUp 0.8s var(--ease-volcanic) 0.5s forwards;
         }
 
         h1 .highlight {
-            color: var(--argand-accent);
+            background: linear-gradient(135deg, var(--flame-core) 0%, var(--flame-edge) 50%, var(--gold-deep) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             position: relative;
         }
 
@@ -326,252 +404,322 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: var(--argand-secondary);
+            background: linear-gradient(90deg, var(--flame-core), var(--gold-deep));
             transform: scaleX(0);
             transform-origin: left;
-            animation: underline-draw 0.8s var(--ease-out-expo) 1.2s forwards;
+            animation: underline-ignite 0.8s var(--ease-volcanic) 1.2s forwards;
+            border-radius: 2px;
+            box-shadow: 0 0 20px var(--flame-core);
         }
 
-        @keyframes underline-draw {
+        @keyframes underline-ignite {
             to { transform: scaleX(1); }
         }
 
         .hero-description {
-            font-size: 1.25rem;
-            color: var(--argand-text-secondary);
-            max-width: 540px;
-            margin-bottom: 3rem;
+            font-size: 1.35rem;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin-bottom: 3.5rem;
             opacity: 0;
-            animation: fadeSlideUp 0.8s var(--ease-out-expo) 0.7s forwards;
+            animation: fadeSlideUp 0.8s var(--ease-volcanic) 0.7s forwards;
+            line-height: 1.7;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           FEATURE CARDS - Interactive with Details
+           FEATURE CARDS - Interactive with Volcanic Details
            ═══════════════════════════════════════════════════════════════════════ */
         .features {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            max-width: 560px;
-            margin-bottom: 3rem;
+            gap: 1.25rem;
+            max-width: 620px;
+            margin-bottom: 3.5rem;
             opacity: 0;
-            animation: fadeSlideUp 0.8s var(--ease-out-expo) 0.9s forwards;
+            animation: fadeSlideUp 0.8s var(--ease-volcanic) 0.9s forwards;
         }
 
         .feature {
             position: relative;
-            padding: 1.5rem;
-            background: white;
-            border: 2px solid var(--argand-border);
-            border-radius: 12px;
+            padding: 1.75rem;
+            background: linear-gradient(135deg, rgba(26, 31, 46, 0.8) 0%, rgba(15, 20, 25, 0.9) 100%);
+            border: 1px solid rgba(201, 169, 98, 0.15);
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.4s var(--ease-out-expo);
+            transition: all 0.5s var(--ease-volcanic);
             overflow: hidden;
         }
 
         .feature::before {
             content: '';
             position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.08) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.5s var(--ease-volcanic);
+        }
+
+        .feature::after {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             width: 4px;
             height: 100%;
-            background: var(--argand-secondary);
+            background: linear-gradient(180deg, var(--flame-core), var(--gold-deep));
             transform: scaleY(0);
             transform-origin: top;
-            transition: transform 0.4s var(--ease-out-expo);
+            transition: transform 0.5s var(--ease-volcanic);
+            border-radius: 0 2px 2px 0;
         }
 
         .feature:hover {
-            border-color: var(--argand-secondary);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(26, 58, 74, 0.12);
+            border-color: rgba(255, 107, 53, 0.4);
+            transform: translateY(-6px);
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(255, 107, 53, 0.1);
         }
 
         .feature:hover::before {
+            opacity: 1;
+        }
+
+        .feature:hover::after {
             transform: scaleY(1);
         }
 
         .feature-header {
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.875rem;
             margin-bottom: 0.5rem;
         }
 
         .feature-icon {
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--argand-bg-secondary);
-            border-radius: 8px;
-            color: var(--argand-primary);
-            font-size: 1.125rem;
-            transition: all 0.3s var(--ease-out-expo);
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(201, 169, 98, 0.1) 100%);
+            border-radius: 10px;
+            color: var(--flame-core);
+            font-size: 1.25rem;
+            transition: all 0.4s var(--ease-flame);
         }
 
         .feature:hover .feature-icon {
-            background: var(--argand-secondary);
-            color: var(--argand-primary-dark);
-            transform: scale(1.1);
+            background: linear-gradient(135deg, var(--flame-core), var(--flame-mid));
+            color: var(--volcanic-obsidian);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
         }
 
         .feature-name {
-            font-size: 1rem;
+            font-size: 1.125rem;
             font-weight: 700;
-            color: var(--argand-primary);
+            color: var(--text-primary);
+            transition: color 0.3s var(--ease-volcanic);
+        }
+
+        .feature:hover .feature-name {
+            color: var(--flame-glow);
         }
 
         .feature-description {
-            font-size: 0.875rem;
-            color: var(--argand-text-muted);
-            line-height: 1.5;
+            position: relative;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
             max-height: 0;
             overflow: hidden;
             opacity: 0;
-            transition: all 0.4s var(--ease-out-expo);
+            transition: all 0.5s var(--ease-volcanic);
         }
 
         .feature:hover .feature-description,
-        .feature:focus .feature-description {
-            max-height: 100px;
+        .feature:focus .feature-description,
+        .feature.expanded .feature-description {
+            max-height: 120px;
             opacity: 1;
-            margin-top: 0.75rem;
+            margin-top: 1rem;
+            color: var(--text-secondary);
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           PRIVACY BADGE
+           PRIVACY BADGE - Bedrock Foundation
            ═══════════════════════════════════════════════════════════════════════ */
         .privacy-banner {
             display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.875rem 1.25rem;
-            background: rgba(74, 140, 106, 0.08);
-            border: 1px solid rgba(74, 140, 106, 0.2);
+            gap: 0.875rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, rgba(95, 168, 130, 0.1) 0%, rgba(95, 168, 130, 0.05) 100%);
+            border: 1px solid rgba(95, 168, 130, 0.25);
             border-radius: 100px;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
             opacity: 0;
-            animation: fadeSlideUp 0.8s var(--ease-out-expo) 1.1s forwards;
+            animation: fadeSlideUp 0.8s var(--ease-volcanic) 1.1s forwards;
+            transition: all 0.4s var(--ease-volcanic);
+        }
+
+        .privacy-banner:hover {
+            background: linear-gradient(135deg, rgba(95, 168, 130, 0.15) 0%, rgba(95, 168, 130, 0.08) 100%);
+            border-color: rgba(95, 168, 130, 0.4);
+            transform: translateY(-2px);
         }
 
         .privacy-icon {
-            width: 20px;
-            height: 20px;
-            color: var(--argand-success);
+            width: 22px;
+            height: 22px;
+            color: var(--success);
+            filter: drop-shadow(0 0 8px var(--success-glow));
         }
 
         .privacy-text {
-            font-size: 0.9rem;
-            color: var(--argand-text-secondary);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
         }
 
         .privacy-text strong {
-            color: var(--argand-success);
+            color: var(--success);
             font-weight: 700;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           NOTIFY FORM
+           NOTIFY FORM - Formspree Integration
            ═══════════════════════════════════════════════════════════════════════ */
         .notify-section {
             opacity: 0;
-            animation: fadeSlideUp 0.8s var(--ease-out-expo) 1.3s forwards;
+            animation: fadeSlideUp 0.8s var(--ease-volcanic) 1.3s forwards;
         }
 
         .notify-label {
             font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--argand-text-muted);
+            font-weight: 700;
+            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.75rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
             display: block;
         }
 
         .notify-form {
             display: flex;
-            gap: 0.75rem;
-            max-width: 440px;
+            gap: 0.875rem;
+            max-width: 500px;
         }
 
         .notify-input {
             flex: 1;
-            padding: 1rem 1.25rem;
-            background: white;
-            border: 2px solid var(--argand-border);
-            border-radius: 10px;
-            color: var(--argand-text);
+            padding: 1.125rem 1.5rem;
+            background: rgba(26, 31, 46, 0.8);
+            border: 2px solid rgba(201, 169, 98, 0.2);
+            border-radius: 12px;
+            color: var(--text-primary);
             font-family: inherit;
             font-size: 1rem;
-            transition: all 0.3s var(--ease-out-expo);
+            transition: all 0.4s var(--ease-volcanic);
         }
 
         .notify-input::placeholder {
-            color: var(--argand-text-muted);
+            color: var(--text-muted);
             font-style: italic;
         }
 
         .notify-input:focus {
             outline: none;
-            border-color: var(--argand-secondary);
-            box-shadow: 0 0 0 4px rgba(201, 169, 98, 0.15);
+            border-color: var(--flame-core);
+            background: rgba(26, 31, 46, 1);
+            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.15), 0 0 30px rgba(255, 107, 53, 0.1);
         }
 
         .notify-btn {
-            padding: 1rem 1.75rem;
-            background: var(--argand-primary);
-            color: var(--argand-text-inverse);
+            padding: 1.125rem 2rem;
+            background: linear-gradient(135deg, var(--flame-core) 0%, var(--flame-mid) 100%);
+            color: var(--volcanic-obsidian);
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-family: inherit;
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s var(--ease-out-expo);
+            transition: all 0.4s var(--ease-volcanic);
             white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .notify-btn:hover {
-            background: var(--argand-primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(26, 58, 74, 0.2);
+            background: linear-gradient(135deg, var(--flame-mid) 0%, var(--flame-edge) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 107, 53, 0.3), 0 0 20px rgba(255, 107, 53, 0.2);
         }
 
         .notify-btn:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
+        }
+
+        .notify-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .notify-success {
             display: none;
-            margin-top: 1rem;
-            padding: 0.875rem 1.25rem;
-            background: rgba(74, 140, 106, 0.08);
-            border: 1px solid rgba(74, 140, 106, 0.2);
-            border-radius: 10px;
-            color: var(--argand-success);
-            font-weight: 500;
+            margin-top: 1.25rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, rgba(95, 168, 130, 0.15) 0%, rgba(95, 168, 130, 0.08) 100%);
+            border: 1px solid rgba(95, 168, 130, 0.3);
+            border-radius: 12px;
+            color: var(--success);
+            font-weight: 600;
         }
 
         .notify-success.visible {
-            display: block;
-            animation: fadeSlideUp 0.4s var(--ease-out-expo);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: fadeSlideUp 0.4s var(--ease-volcanic);
+        }
+
+        .notify-error {
+            display: none;
+            margin-top: 1.25rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, rgba(232, 93, 76, 0.15) 0%, rgba(232, 93, 76, 0.08) 100%);
+            border: 1px solid rgba(232, 93, 76, 0.3);
+            border-radius: 12px;
+            color: var(--ember-red);
+            font-weight: 600;
+        }
+
+        .notify-error.visible {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: fadeSlideUp 0.4s var(--ease-volcanic);
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
            FOOTER
            ═══════════════════════════════════════════════════════════════════════ */
         footer {
-            padding: 2rem 3rem;
+            padding: 2.5rem 3rem;
             opacity: 0;
-            animation: fadeSlideUp 0.8s var(--ease-out-expo) 1.5s forwards;
+            animation: fadeSlideUp 0.8s var(--ease-volcanic) 1.5s forwards;
         }
 
         .footer-text {
-            font-size: 0.8rem;
-            color: var(--argand-text-muted);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-text .flame-accent {
+            color: var(--flame-core);
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
@@ -580,7 +728,7 @@
         @keyframes fadeSlideUp {
             from {
                 opacity: 0;
-                transform: translateY(24px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -591,7 +739,7 @@
         @keyframes fadeSlideDown {
             from {
                 opacity: 0;
-                transform: translateY(-24px);
+                transform: translateY(-30px);
             }
             to {
                 opacity: 1;
@@ -638,54 +786,83 @@
             }
 
             h1 {
-                font-size: 2rem;
+                font-size: 2.25rem;
             }
 
             .hero-description {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
 
             .privacy-banner {
                 flex-direction: column;
                 text-align: center;
-                border-radius: 12px;
+                border-radius: 16px;
             }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           LOADING STATE
+           ═══════════════════════════════════════════════════════════════════════ */
+        .loading .notify-btn {
+            position: relative;
+            color: transparent;
+        }
+
+        .loading .notify-btn::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 3px solid rgba(10, 10, 15, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--volcanic-obsidian);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <!-- Background Elements -->
-    <div class="bg-grid"></div>
-    <div class="bg-noise"></div>
+    <div class="volcanic-bg"></div>
+    <div class="precision-grid"></div>
+    <div class="heat-shimmer"></div>
 
     <!-- Argand Diagram - Complex Plane Visualization -->
     <div class="argand-diagram">
-        <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
             <!-- Grid Lines -->
             <g class="grid-lines">
-                <line class="grid-line" x1="100" y1="300" x2="500" y2="300"/>
-                <line class="grid-line" x1="200" y1="300" x2="200" y2="300"/>
-                <line class="grid-line" x1="400" y1="300" x2="400" y2="300"/>
-                <line class="grid-line" x1="300" y1="100" x2="300" y2="500"/>
-                <line class="grid-line" x1="300" y1="200" x2="300" y2="200"/>
-                <line class="grid-line" x1="300" y1="400" x2="300" y2="400"/>
+                <line class="grid-line" x1="150" y1="350" x2="550" y2="350"/>
+                <line class="grid-line" x1="350" y1="150" x2="350" y2="550"/>
             </g>
+            <!-- Unit Circle -->
+            <circle class="unit-circle" cx="350" cy="350" r="140"/>
             <!-- Main Axes -->
-            <line class="axis-line" x1="50" y1="300" x2="550" y2="300"/>
-            <line class="axis-line" x1="300" y1="50" x2="300" y2="550"/>
+            <line class="axis-line" x1="50" y1="350" x2="650" y2="350"/>
+            <line class="axis-line" x1="350" y1="50" x2="350" y2="650"/>
             <!-- Axis Labels -->
-            <text x="540" y="290" fill="#1a3a4a" font-size="14" font-weight="600">Re</text>
-            <text x="310" y="65" fill="#1a3a4a" font-size="14" font-weight="600">Im</text>
+            <text x="630" y="340" fill="#c9a962" font-size="16" font-weight="700" font-family="'Atkinson Hyperlegible', sans-serif">Re</text>
+            <text x="360" y="70" fill="#c9a962" font-size="16" font-weight="700" font-family="'Atkinson Hyperlegible', sans-serif">Im</text>
             <!-- Animated Pulse Rings -->
-            <circle class="pulse-ring" cx="300" cy="300" r="20"/>
-            <circle class="pulse-ring pulse-ring-2" cx="300" cy="300" r="20"/>
-            <!-- Orbiting Points (Complex Numbers) -->
-            <circle class="point" cx="300" cy="300" r="8"/>
-            <circle class="point point-2" cx="300" cy="300" r="6"/>
-            <circle class="point point-3" cx="300" cy="300" r="5"/>
-            <circle class="point point-4" cx="300" cy="300" r="4"/>
-            <!-- Center Point -->
-            <circle cx="300" cy="300" r="4" fill="#c9a962"/>
+            <circle class="pulse-ring" cx="350" cy="350" r="30"/>
+            <circle class="pulse-ring pulse-ring-2" cx="350" cy="350" r="30"/>
+            <!-- Orbiting Points (Complex Numbers as Flames) -->
+            <circle class="flame-point" cx="350" cy="350" r="10"/>
+            <circle class="flame-point flame-point-2" cx="350" cy="350" r="8"/>
+            <circle class="flame-point flame-point-3" cx="350" cy="350" r="6"/>
+            <circle class="flame-point flame-point-4" cx="350" cy="350" r="5"/>
+            <!-- Center Point - Origin -->
+            <circle cx="350" cy="350" r="5" fill="#c9a962">
+                <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/>
+            </circle>
         </svg>
     </div>
 
@@ -693,78 +870,83 @@
     <div class="content">
         <header>
             <a href="/" class="logo">
-                <!-- Compass Rose Icon -->
+                <!-- Flame Compass Icon -->
                 <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="45" fill="#1a3a4a"/>
-                    <path d="M50 10 L55 45 L50 50 L45 45 Z" fill="#c9a962"/>
-                    <path d="M90 50 L55 55 L50 50 L55 45 Z" fill="#c9a962"/>
-                    <path d="M50 90 L45 55 L50 50 L55 55 Z" fill="#a68b4b"/>
-                    <path d="M10 50 L45 45 L50 50 L45 55 Z" fill="#a68b4b"/>
-                    <circle cx="50" cy="50" r="6" fill="#c45c4a"/>
+                    <defs>
+                        <linearGradient id="flameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff6b35"/>
+                            <stop offset="100%" stop-color="#c9a962"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="45" fill="#0f1419"/>
+                    <path d="M50 10 L55 45 L50 50 L45 45 Z" fill="url(#flameGrad)"/>
+                    <path d="M90 50 L55 55 L50 50 L55 45 Z" fill="url(#flameGrad)"/>
+                    <path d="M50 90 L45 55 L50 50 L55 55 Z" fill="#c9a962"/>
+                    <path d="M10 50 L45 45 L50 50 L45 55 Z" fill="#c9a962"/>
+                    <circle cx="50" cy="50" r="6" fill="#ff6b35"/>
                 </svg>
                 <span>Argand</span>
             </a>
             <div class="status-badge">
                 <span class="status-dot"></span>
-                <span>Coming Soon</span>
+                <span>Forging</span>
             </div>
         </header>
 
         <main class="hero">
-            <p class="tagline">Precision Search</p>
+            <p class="tagline">Volcanic Precision</p>
 
-            <h1>Find with <span class="highlight">precision</span>,<br>not persuasion</h1>
+            <h1>Search with <span class="highlight">precision</span>,<br>not persuasion</h1>
 
             <p class="hero-description">
-                Search that understands intent. Results ranked by relevance, not revenue.
-                Built on a foundation where privacy isn't a feature—it's bedrock.
+                Results forged by relevance, not revenue. A search engine built on bedrock privacy
+                with the precision of an instrument and the intensity of volcanic fire.
             </p>
 
             <div class="features">
                 <div class="feature" tabindex="0">
                     <div class="feature-header">
                         <div class="feature-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8"/>
                                 <path d="m21 21-4.3-4.3"/>
                             </svg>
                         </div>
                         <span class="feature-name">Search</span>
                     </div>
-                    <p class="feature-description">Intent-aware search that finds what you actually meant. No SEO games. No sponsored results buried in organic listings.</p>
+                    <p class="feature-description">Intent-aware search that finds what you actually meant. No SEO manipulation. No sponsored results masquerading as organic. Pure signal.</p>
                 </div>
 
                 <div class="feature" tabindex="0">
                     <div class="feature-header">
                         <div class="feature-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
                                 <circle cx="12" cy="10" r="3"/>
                             </svg>
                         </div>
                         <span class="feature-name">Maps</span>
                     </div>
-                    <p class="feature-description">Navigate without surveillance. Directions and places without tracking your every move or selling your location history.</p>
+                    <p class="feature-description">Navigate without surveillance. Directions and places without tracking your movements or monetizing your location history.</p>
                 </div>
 
                 <div class="feature" tabindex="0">
                     <div class="feature-header">
                         <div class="feature-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
                             </svg>
                         </div>
                         <span class="feature-name">Weather</span>
                     </div>
-                    <p class="feature-description">Accurate forecasts from trusted sources. No location retention—check the weather without being checked on.</p>
+                    <p class="feature-description">Accurate forecasts from trusted sources. Check conditions anywhere without becoming a data point yourself.</p>
                 </div>
 
                 <div class="feature" tabindex="0">
                     <div class="feature-header">
                         <div class="feature-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="m9 12 2 2 4-4"/>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3Z"/>
                             </svg>
                         </div>
                         <span class="feature-name">Discovery</span>
@@ -783,30 +965,46 @@
 
             <div class="notify-section">
                 <label class="notify-label">Get notified at launch</label>
-                <form class="notify-form" id="notifyForm">
+                <form class="notify-form" id="notifyForm" action="https://formspree.io/f/mvgoqpkz" method="POST">
                     <input
                         type="email"
+                        name="email"
                         class="notify-input"
                         id="emailInput"
                         placeholder="your@email.com"
                         required
                         aria-label="Email address"
                     >
-                    <button type="submit" class="notify-btn" id="notifyBtn">Notify Me</button>
+                    <input type="hidden" name="_subject" value="Argand Launch Notification Signup">
+                    <button type="submit" class="notify-btn" id="notifyBtn">Ignite</button>
                 </form>
-                <p class="notify-success" id="notifySuccess">Thanks! We'll let you know when we're ready.</p>
+                <p class="notify-success" id="notifySuccess">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                    Flame kindled! We'll notify you when we launch.
+                </p>
+                <p class="notify-error" id="notifyError">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="15" y1="9" x2="9" y2="15"/>
+                        <line x1="9" y1="9" x2="15" y2="15"/>
+                    </svg>
+                    Something went wrong. Please try again.
+                </p>
             </div>
         </main>
 
         <footer>
-            <p class="footer-text">&copy; 2025 Argand &middot; Built with precision</p>
+            <p class="footer-text">&copy; 2025 Argand &middot; Forged with <span class="flame-accent">volcanic precision</span></p>
         </footer>
     </div>
 
     <script>
         // index.html - JavaScript
         // By Nic Weyand!
-        // Handles form submission and interactions for Argand coming soon page
+        // Handles Formspree form submission and interactions for Argand coming soon page
 
         (function() {
             'use strict';
@@ -815,6 +1013,7 @@
             var emailInput = document.getElementById('emailInput');
             var btn = document.getElementById('notifyBtn');
             var successMsg = document.getElementById('notifySuccess');
+            var errorMsg = document.getElementById('notifyError');
 
             if (form) {
                 form.addEventListener('submit', function(event) {
@@ -823,29 +1022,49 @@
                     var email = emailInput.value.trim();
                     if (!email) return;
 
-                    btn.textContent = 'Sent!';
-                    btn.style.background = '#4a8c6a';
-                    emailInput.value = '';
-                    emailInput.disabled = true;
+                    // Add loading state
+                    form.classList.add('loading');
                     btn.disabled = true;
-                    successMsg.classList.add('visible');
 
-                    try {
-                        var emails = JSON.parse(localStorage.getItem('argand_notify') || '[]');
-                        emails.push({ email: email, timestamp: Date.now() });
-                        localStorage.setItem('argand_notify', JSON.stringify(emails));
-                    } catch (e) {}
+                    // Send to Formspree
+                    var formData = new FormData(form);
 
-                    setTimeout(function() {
-                        btn.textContent = 'Notify Me';
-                        btn.style.background = '';
-                        emailInput.disabled = false;
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(function(response) {
+                        form.classList.remove('loading');
+                        if (response.ok) {
+                            // Success
+                            btn.textContent = 'Ignited!';
+                            btn.style.background = 'linear-gradient(135deg, #5fa882 0%, #4a9970 100%)';
+                            emailInput.value = '';
+                            emailInput.disabled = true;
+                            successMsg.classList.add('visible');
+                            errorMsg.classList.remove('visible');
+                        } else {
+                            throw new Error('Form submission failed');
+                        }
+                    })
+                    .catch(function(error) {
+                        form.classList.remove('loading');
                         btn.disabled = false;
-                    }, 4000);
+                        errorMsg.classList.add('visible');
+                        successMsg.classList.remove('visible');
+
+                        // Reset after delay
+                        setTimeout(function() {
+                            errorMsg.classList.remove('visible');
+                        }, 5000);
+                    });
                 });
             }
 
-            // Feature card keyboard navigation
+            // Feature card keyboard navigation and click expansion
             var features = document.querySelectorAll('.feature');
             features.forEach(function(feature) {
                 feature.addEventListener('keydown', function(e) {
@@ -854,7 +1073,24 @@
                         this.classList.toggle('expanded');
                     }
                 });
+
+                feature.addEventListener('click', function() {
+                    // Toggle on mobile/touch
+                    if (window.matchMedia('(hover: none)').matches) {
+                        this.classList.toggle('expanded');
+                    }
+                });
             });
+
+            // Parallax effect on Argand diagram
+            var diagram = document.querySelector('.argand-diagram');
+            if (diagram && window.matchMedia('(hover: hover)').matches) {
+                document.addEventListener('mousemove', function(e) {
+                    var x = (e.clientX / window.innerWidth - 0.5) * 20;
+                    var y = (e.clientY / window.innerHeight - 0.5) * 20;
+                    diagram.style.transform = 'translateY(-50%) translate(' + x + 'px, ' + y + 'px)';
+                });
+            }
         })();
     </script>
 </body>
