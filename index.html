@@ -299,6 +299,87 @@
             .argand-container {
                 display: none;
             }
+            .argand-explainer {
+                display: none;
+            }
+        }
+
+        /* "What's an Argand?" explainer */
+        .argand-explainer {
+            position: fixed;
+            right: calc(3% + min(480px, 38vw) + 20px);
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 4;
+            max-width: 220px;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-out) 1.5s forwards;
+        }
+
+        @media (max-width: 1400px) {
+            .argand-explainer {
+                right: calc(2% + min(400px, 32vw) + 15px);
+                max-width: 180px;
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .argand-explainer {
+                display: none;
+            }
+        }
+
+        .argand-explainer-content {
+            background: rgba(28, 18, 11, 0.92);
+            border: 1px solid rgba(255, 107, 53, 0.35);
+            border-radius: 12px;
+            padding: var(--space-md);
+            backdrop-filter: blur(8px);
+            position: relative;
+        }
+
+        .argand-explainer-content::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 8px solid transparent;
+            border-left-color: rgba(255, 107, 53, 0.35);
+        }
+
+        .argand-explainer-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--flame-ember);
+            margin-bottom: var(--space-xs);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .argand-explainer-title::before {
+            content: '?';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: var(--flame-ember);
+            color: var(--bg-deep);
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .argand-explainer-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .argand-explainer-text strong {
+            color: var(--text-primary);
         }
 
         .argand-diagram {
@@ -499,6 +580,7 @@
         .services {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+            align-items: start; /* CRITICAL: Prevents row stretching when one card expands */
             gap: var(--space-md);
             max-width: 680px;
             margin-bottom: var(--space-2xl);
@@ -753,6 +835,7 @@
         .tech-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            align-items: start; /* Prevents row stretching */
             gap: var(--space-sm);
             max-width: 760px;
         }
@@ -1163,6 +1246,19 @@
 
     <!-- Ember Particle Canvas -->
     <canvas id="ember-canvas" aria-hidden="true"></canvas>
+
+    <!-- "What's an Argand?" Explainer -->
+    <div class="argand-explainer" aria-hidden="true">
+        <div class="argand-explainer-content">
+            <div class="argand-explainer-title">What's an Argand?</div>
+            <p class="argand-explainer-text">
+                It's a way to visualize <strong>complex numbers</strong> on a 2D plane.
+                The horizontal axis is "real" numbers, the vertical is "imaginary."
+                That glowing dot? It represents a point in this space, orbiting the origin.
+                We named our search engine after it because we navigate the <strong>complex space of information</strong> to find exactly what you need.
+            </p>
+        </div>
+    </div>
 
     <!-- Argand Diagram - More Prominent -->
     <div class="argand-container" aria-hidden="true">
