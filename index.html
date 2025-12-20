@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <!-- index.html -->
 <!-- By Nic Weyand! -->
-<!-- Argand - The search engine that should be standard -->
+<!-- Argand - The search engine that gives you EXACTLY what you want, first try -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Argand — Search the Way It Should Be</title>
-    <meta name="description" content="Argand: Search, Maps, Weather, Discovery—built the way every service should be. Privacy and safety as the baseline, not a feature.">
-    <meta name="theme-color" content="#0d0d12">
+    <title>Argand — The Exact Result You Want, First Try</title>
+    <meta name="description" content="Argand: Search that finds exactly what you're looking for on the first try. Maps, Weather, Discovery—all built the way services should be.">
+    <meta name="theme-color" content="#1a0a05">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Argand — Search the Way It Should Be">
-    <meta property="og:description" content="Why isn't every search engine like this? Privacy and safety as standard. Built by Nic Weyand.">
+    <meta property="og:title" content="Argand — The Exact Result You Want, First Try">
+    <meta property="og:description" content="Stop scrolling through garbage. Get exactly what you need, immediately. Built by Nic Weyand.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://argand.org">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d0d12'/%3E%3Ctext x='50' y='68' font-family='system-ui' font-size='52' font-weight='700' fill='%23e97451' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a0a05'/%3E%3Ctext x='50' y='68' font-family='system-ui' font-size='52' font-weight='700' fill='%23e97451' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+
+    <!-- Preload critical font -->
+    <link rel="preload" href="fonts/AtkinsonHyperlegible-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
     <style>
         /* ═══════════════════════════════════════════════════════════════════════
@@ -53,39 +56,42 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           DESIGN TOKENS - Warm Rust & Ember Palette
+           DESIGN TOKENS - Rengoku Fire Palette
            ═══════════════════════════════════════════════════════════════════════ */
         :root {
-            /* Depths */
-            --bg-deep: #0d0d12;
-            --bg-surface: #14141b;
-            --bg-elevated: #1c1c26;
-            --bg-hover: #252532;
+            /* Fire depths - warm blacks with orange undertones */
+            --bg-deep: #0f0805;
+            --bg-fire-1: #1a0a05;
+            --bg-fire-2: #2a1208;
+            --bg-surface: #1c120b;
+            --bg-elevated: #2a1a10;
+            --bg-hover: #3a2215;
 
-            /* Rust & Ember - Primary palette */
-            --rust-deep: #B7410E;
-            --rust-bright: #E97451;
-            --ember-core: #FF6B35;
-            --ember-glow: rgba(233, 116, 81, 0.4);
+            /* Rengoku Flame Palette */
+            --flame-core: #FF6B35;
+            --flame-bright: #FF8C42;
+            --flame-ember: #E97451;
+            --flame-deep: #B7410E;
+            --flame-glow: rgba(255, 107, 53, 0.5);
             --terracotta: #C04000;
             --copper: #B87333;
 
             /* Warm accents */
-            --gold: #D4A84B;
-            --gold-soft: #E8C97A;
+            --gold: #FFB347;
+            --gold-soft: #FFD699;
 
             /* Teal for contrast */
             --teal: #6EC5B8;
             --teal-soft: #8FD4C9;
 
             /* Text */
-            --text-primary: #F0EDE8;
-            --text-secondary: #A8A4A0;
-            --text-muted: #6B6864;
+            --text-primary: #FFF5EB;
+            --text-secondary: #C4B5A8;
+            --text-muted: #8B7D70;
 
             /* Functional */
             --success: #6EC5B8;
-            --error: #E07A7A;
+            --error: #FF7B7B;
 
             /* Spacing */
             --space-xs: 0.25rem;
@@ -122,24 +128,132 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Low-bandwidth mode - minimal animations */
+        body.low-bandwidth * {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.1s !important;
+        }
+
+        body.low-bandwidth .fire-background,
+        body.low-bandwidth .fire-glow-1,
+        body.low-bandwidth .fire-glow-2,
+        body.low-bandwidth .fire-glow-3,
+        body.low-bandwidth .fire-glow-top,
+        body.low-bandwidth #ember-canvas {
+            display: none !important;
+        }
+
         ::selection {
-            background-color: rgba(233, 116, 81, 0.3);
+            background-color: rgba(255, 107, 53, 0.4);
             color: var(--text-primary);
         }
 
         a {
-            color: var(--rust-bright);
+            color: var(--flame-ember);
             text-decoration: none;
             transition: color 0.2s var(--ease-out);
         }
 
         a:hover {
-            color: var(--ember-core);
+            color: var(--flame-bright);
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           EMBER PARTICLE CANVAS - Background Animation
+           FIRE BACKGROUND - Full Rengoku Theme (top and bottom)
            ═══════════════════════════════════════════════════════════════════════ */
+        .fire-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                /* Top fire glow */
+                radial-gradient(ellipse 100% 50% at 80% 0%, rgba(183, 65, 14, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 40% at 20% 0%, rgba(255, 107, 53, 0.15) 0%, transparent 45%),
+                /* Bottom fire glow */
+                radial-gradient(ellipse 120% 80% at 50% 100%, rgba(183, 65, 14, 0.3) 0%, transparent 55%),
+                radial-gradient(ellipse 100% 60% at 30% 100%, rgba(255, 107, 53, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 50% at 70% 100%, rgba(233, 116, 81, 0.22) 0%, transparent 45%),
+                /* Base gradient */
+                linear-gradient(to bottom, #1f0d06 0%, #0f0805 30%, #0f0805 70%, #1a0a05 100%);
+        }
+
+        /* Animated fire glow - TOP */
+        .fire-glow-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background:
+                radial-gradient(ellipse 120% 80% at 70% 0%, rgba(255, 107, 53, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 80% 60% at 30% 0%, rgba(233, 116, 81, 0.08) 0%, transparent 50%);
+            animation: fireGlowTop 5s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes fireGlowTop {
+            0%, 100% { opacity: 0.7; transform: scaleX(1); }
+            50% { opacity: 1; transform: scaleX(1.05); }
+        }
+
+        /* Animated fire glow layers - BOTTOM */
+        .fire-glow-1 {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: radial-gradient(ellipse 150% 100% at 50% 100%, rgba(255, 107, 53, 0.15) 0%, transparent 65%);
+            animation: fireGlow1 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .fire-glow-2 {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 45%;
+            background: radial-gradient(ellipse 120% 80% at 40% 100%, rgba(233, 116, 81, 0.12) 0%, transparent 55%);
+            animation: fireGlow2 5s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .fire-glow-3 {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: radial-gradient(ellipse 100% 70% at 60% 100%, rgba(255, 140, 66, 0.1) 0%, transparent 50%);
+            animation: fireGlow3 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes fireGlow1 {
+            0%, 100% { opacity: 0.8; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.08); }
+        }
+
+        @keyframes fireGlow2 {
+            0%, 100% { opacity: 0.7; transform: translateX(0) scaleY(1); }
+            50% { opacity: 1; transform: translateX(2%) scaleY(1.12); }
+        }
+
+        @keyframes fireGlow3 {
+            0%, 100% { opacity: 0.6; transform: translateX(0) scaleY(1); }
+            50% { opacity: 0.9; transform: translateX(-2%) scaleY(1.15); }
+        }
+
+        /* Ember Particle Canvas */
         #ember-canvas {
             position: fixed;
             top: 0;
@@ -147,43 +261,41 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Gradient overlay at bottom */
-        .ember-gradient {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 40%;
-            background: linear-gradient(to top, rgba(183, 65, 14, 0.08) 0%, transparent 100%);
-            pointer-events: none;
             z-index: 2;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           ARGAND DIAGRAM - Contained with beautiful animation
+           ARGAND DIAGRAM - More Prominent
            ═══════════════════════════════════════════════════════════════════════ */
         .argand-container {
             position: fixed;
             right: 3%;
             top: 50%;
             transform: translateY(-50%);
-            width: min(420px, 35vw);
-            height: min(420px, 35vw);
+            width: min(480px, 38vw);
+            height: min(480px, 38vw);
             z-index: 3;
             pointer-events: none;
+        }
+
+        @media (max-width: 1400px) {
+            .argand-container {
+                width: min(400px, 32vw);
+                height: min(400px, 32vw);
+                right: 2%;
+            }
         }
 
         @media (max-width: 1100px) {
             .argand-container {
                 opacity: 0.5;
-                right: -8%;
+                right: 0;
+                width: min(350px, 30vw);
+                height: min(350px, 30vw);
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .argand-container {
                 display: none;
             }
@@ -193,24 +305,26 @@
             width: 100%;
             height: 100%;
             opacity: 0;
-            animation: diagramFadeIn 1.5s var(--ease-out) 0.5s forwards;
+            animation: diagramFadeIn 2s var(--ease-out) 0.5s forwards;
         }
 
         @keyframes diagramFadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 0.25; transform: scale(1); }
+            from { opacity: 0; transform: scale(0.85) rotate(-5deg); }
+            to { opacity: 0.55; transform: scale(1) rotate(0deg); }
         }
 
-        /* Gentle breathing animation */
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); opacity: 0.25; }
-            50% { transform: scale(1.02); opacity: 0.3; }
+        /* Gentle floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(0.5deg); }
+            75% { transform: translateY(6px) rotate(-0.5deg); }
         }
 
         .argand-diagram svg {
             width: 100%;
             height: 100%;
-            animation: breathe 8s ease-in-out infinite;
+            animation: float 15s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 107, 53, 0.2));
         }
 
         /* Rotating unit circle */
@@ -221,28 +335,18 @@
 
         .unit-circle-group {
             transform-origin: 200px 200px;
-            animation: rotateCircle 45s linear infinite;
+            animation: rotateCircle 50s linear infinite;
         }
 
         /* Orbiting complex point */
         @keyframes orbitPoint {
-            from { transform: rotate(0deg) translateX(80px) rotate(0deg); }
-            to { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        .orbiting-point {
+        .orbit-group {
             transform-origin: 200px 200px;
-            animation: orbitPoint 12s linear infinite;
-        }
-
-        /* Pulsing glow on point */
-        @keyframes pulseGlow {
-            0%, 100% { filter: drop-shadow(0 0 4px var(--teal)); r: 5; }
-            50% { filter: drop-shadow(0 0 12px var(--teal)); r: 7; }
-        }
-
-        .complex-point {
-            animation: pulseGlow 2s ease-in-out infinite;
+            animation: orbitPoint 6s linear infinite;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
@@ -274,15 +378,17 @@
         }
 
         .logo {
-            font-size: 1.75rem;
+            font-size: 1.85rem;
             font-weight: 700;
-            color: var(--text-primary);
+            color: var(--flame-ember);
             letter-spacing: -0.03em;
-            transition: color 0.3s var(--ease-out);
+            transition: all 0.3s var(--ease-out);
+            text-shadow: 0 0 30px rgba(233, 116, 81, 0.4);
         }
 
         .logo:hover {
-            color: var(--rust-bright);
+            color: var(--text-primary);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
         .status-pill {
@@ -291,26 +397,35 @@
             gap: var(--space-sm);
             padding: var(--space-sm) var(--space-md);
             background: var(--bg-elevated);
-            border: 1px solid rgba(233, 116, 81, 0.2);
+            border: 1px solid rgba(255, 107, 53, 0.3);
             border-radius: 100px;
             font-size: 0.8rem;
             font-weight: 600;
-            color: var(--rust-bright);
+            color: var(--flame-ember);
             letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .status-pill:hover {
+            background: var(--bg-hover);
+            border-color: var(--flame-ember);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.2);
         }
 
         .status-dot {
             width: 8px;
             height: 8px;
-            background: var(--rust-bright);
+            background: var(--flame-core);
             border-radius: 50%;
             animation: pulse 2s ease-in-out infinite;
-            box-shadow: 0 0 8px var(--ember-glow);
+            box-shadow: 0 0 12px var(--flame-glow);
         }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.2); }
+            50% { opacity: 0.6; transform: scale(1.3); }
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
@@ -322,7 +437,7 @@
             flex-direction: column;
             justify-content: center;
             padding: var(--space-xl) var(--space-xl) var(--space-2xl);
-            max-width: 760px;
+            max-width: 800px;
         }
 
         @media (max-width: 768px) {
@@ -336,10 +451,11 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            color: var(--rust-bright);
+            color: var(--flame-core);
             margin-bottom: var(--space-md);
             opacity: 0;
             animation: fadeUp 0.5s var(--ease-out) 0.2s forwards;
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
         }
 
         @keyframes fadeUp {
@@ -348,9 +464,9 @@
         }
 
         h1 {
-            font-size: clamp(2.25rem, 5.5vw, 3.5rem);
+            font-size: clamp(2.25rem, 5.5vw, 3.75rem);
             font-weight: 700;
-            line-height: 1.15;
+            line-height: 1.12;
             color: var(--text-primary);
             margin-bottom: var(--space-lg);
             letter-spacing: -0.02em;
@@ -359,13 +475,14 @@
         }
 
         h1 .highlight {
-            color: var(--rust-bright);
+            color: var(--flame-core);
+            text-shadow: 0 0 50px var(--flame-glow);
         }
 
         .hero-description {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: var(--text-secondary);
-            max-width: 540px;
+            max-width: 580px;
             margin-bottom: var(--space-xl);
             opacity: 0;
             animation: fadeUp 0.6s var(--ease-out) 0.4s forwards;
@@ -377,13 +494,13 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           EXPANDABLE SERVICE CARDS
+           SERVICE CARDS - Fixed accordion (only one opens)
            ═══════════════════════════════════════════════════════════════════════ */
         .services {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: var(--space-md);
-            max-width: 640px;
+            max-width: 680px;
             margin-bottom: var(--space-2xl);
             opacity: 0;
             animation: fadeUp 0.6s var(--ease-out) 0.5s forwards;
@@ -396,23 +513,23 @@
         }
 
         .service-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--bg-hover);
+            background: rgba(28, 18, 11, 0.85);
+            border: 1px solid rgba(255, 107, 53, 0.18);
             border-radius: 16px;
             overflow: hidden;
-            cursor: pointer;
             transition: all 0.4s var(--ease-out);
+            backdrop-filter: blur(8px);
         }
 
-        .service-card:hover,
-        .service-card:focus-within {
-            border-color: rgba(233, 116, 81, 0.4);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
-            transform: translateY(-3px);
+        .service-card:hover {
+            border-color: rgba(255, 107, 53, 0.45);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 35px rgba(255, 107, 53, 0.12);
+            transform: translateY(-4px);
         }
 
         .service-card.expanded {
-            border-color: var(--rust-bright);
+            border-color: var(--flame-ember);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 50px rgba(255, 107, 53, 0.18);
         }
 
         .service-header {
@@ -420,31 +537,34 @@
             align-items: center;
             gap: var(--space-md);
             padding: var(--space-lg);
+            cursor: pointer;
             transition: background 0.3s var(--ease-out);
+            user-select: none;
         }
 
         .service-card:hover .service-header {
-            background: var(--bg-elevated);
+            background: rgba(42, 26, 16, 0.5);
         }
 
         .service-icon {
-            width: 44px;
-            height: 44px;
+            width: 46px;
+            height: 46px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(233, 116, 81, 0.12);
+            background: rgba(255, 107, 53, 0.15);
             border-radius: 12px;
-            color: var(--rust-bright);
+            color: var(--flame-ember);
             flex-shrink: 0;
             transition: all 0.3s var(--ease-out);
         }
 
         .service-card:hover .service-icon,
         .service-card.expanded .service-icon {
-            background: var(--rust-bright);
+            background: var(--flame-ember);
             color: var(--bg-deep);
             transform: scale(1.05);
+            box-shadow: 0 0 25px var(--flame-glow);
         }
 
         .service-info {
@@ -453,7 +573,7 @@
         }
 
         .service-title {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 2px;
@@ -474,17 +594,17 @@
 
         .service-card.expanded .expand-indicator {
             transform: rotate(180deg);
-            color: var(--rust-bright);
+            color: var(--flame-ember);
         }
 
         .service-details {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s var(--ease-out), padding 0.4s var(--ease-out);
+            transition: max-height 0.5s var(--ease-out);
         }
 
         .service-card.expanded .service-details {
-            max-height: 300px;
+            max-height: 500px;
         }
 
         .service-details-inner {
@@ -492,9 +612,9 @@
         }
 
         .service-description {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: var(--space-md);
         }
 
@@ -505,17 +625,58 @@
         }
 
         .feature-tag {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            padding: 4px 10px;
-            background: rgba(233, 116, 81, 0.1);
-            border: 1px solid rgba(233, 116, 81, 0.2);
-            border-radius: 6px;
-            color: var(--rust-bright);
+            padding: 6px 12px;
+            background: rgba(255, 107, 53, 0.12);
+            border: 1px solid rgba(255, 107, 53, 0.28);
+            border-radius: 8px;
+            color: var(--flame-ember);
+            cursor: pointer;
+            transition: all 0.2s var(--ease-out);
+            user-select: none;
+        }
+
+        .feature-tag:hover {
+            background: rgba(255, 107, 53, 0.22);
+            border-color: var(--flame-ember);
+        }
+
+        .feature-tag.active {
+            background: var(--flame-ember);
+            color: var(--bg-deep);
+            border-color: var(--flame-ember);
+        }
+
+        .feature-definition {
+            display: none;
+            margin-top: var(--space-md);
+            padding: var(--space-md);
+            background: rgba(42, 26, 16, 0.65);
+            border-radius: 10px;
+            border-left: 3px solid var(--flame-ember);
+        }
+
+        .feature-definition.visible {
+            display: block;
+            animation: fadeUp 0.3s var(--ease-out);
+        }
+
+        .feature-definition-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--flame-ember);
+            margin-bottom: var(--space-xs);
+        }
+
+        .feature-definition-text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           PHILOSOPHY SECTION - "Why isn't everyone doing this?"
+           PHILOSOPHY SECTION
            ═══════════════════════════════════════════════════════════════════════ */
         .philosophy {
             margin-bottom: var(--space-2xl);
@@ -525,21 +686,22 @@
 
         .philosophy-card {
             padding: var(--space-xl);
-            background: linear-gradient(135deg, rgba(233, 116, 81, 0.08) 0%, rgba(183, 65, 14, 0.04) 100%);
-            border: 1px solid rgba(233, 116, 81, 0.2);
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.12) 0%, rgba(183, 65, 14, 0.06) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.28);
             border-radius: 20px;
-            max-width: 640px;
+            max-width: 680px;
+            backdrop-filter: blur(8px);
         }
 
         .philosophy-headline {
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: var(--space-md);
         }
 
         .philosophy-text {
-            font-size: 1rem;
+            font-size: 1.02rem;
             color: var(--text-secondary);
             line-height: 1.7;
             margin-bottom: var(--space-lg);
@@ -566,12 +728,12 @@
         }
 
         .philosophy-point span {
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             color: var(--text-primary);
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           TECH HIGHLIGHTS - Expandable
+           TECH SECTION - Under the Hood
            ═══════════════════════════════════════════════════════════════════════ */
         .tech-section {
             margin-bottom: var(--space-2xl);
@@ -590,68 +752,66 @@
 
         .tech-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: var(--space-sm);
-            max-width: 640px;
-        }
-
-        @media (max-width: 600px) {
-            .tech-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            max-width: 760px;
         }
 
         .tech-item {
             padding: var(--space-md);
-            background: var(--bg-surface);
-            border: 1px solid var(--bg-hover);
+            background: rgba(28, 18, 11, 0.75);
+            border: 1px solid rgba(255, 107, 53, 0.14);
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s var(--ease-out);
-            overflow: hidden;
+            backdrop-filter: blur(4px);
+            user-select: none;
         }
 
         .tech-item:hover {
-            border-color: rgba(233, 116, 81, 0.3);
+            border-color: rgba(255, 107, 53, 0.38);
             transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
         }
 
         .tech-item.expanded {
-            border-color: var(--rust-bright);
-            background: var(--bg-elevated);
+            border-color: var(--flame-ember);
+            background: rgba(42, 26, 16, 0.85);
         }
 
         .tech-item-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: var(--space-sm);
         }
 
         .tech-item-title {
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             font-weight: 700;
             color: var(--text-primary);
         }
 
         .tech-item-icon {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
+            flex-shrink: 0;
         }
 
         .tech-item-desc {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s var(--ease-out), margin-top 0.3s var(--ease-out);
+            transition: max-height 0.35s var(--ease-out), margin-top 0.35s var(--ease-out);
         }
 
         .tech-item.expanded .tech-item-desc {
-            max-height: 100px;
+            max-height: 200px;
             margin-top: var(--space-sm);
         }
 
         .tech-item-desc p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            line-height: 1.5;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
@@ -664,9 +824,9 @@
         }
 
         .notify-label {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             margin-bottom: var(--space-md);
             display: block;
         }
@@ -674,7 +834,7 @@
         .notify-form {
             display: flex;
             gap: var(--space-sm);
-            max-width: 420px;
+            max-width: 460px;
         }
 
         @media (max-width: 500px) {
@@ -686,8 +846,8 @@
         .notify-input {
             flex: 1;
             padding: var(--space-md) var(--space-lg);
-            background: var(--bg-surface);
-            border: 2px solid var(--bg-hover);
+            background: rgba(28, 18, 11, 0.92);
+            border: 2px solid rgba(255, 107, 53, 0.22);
             border-radius: 12px;
             color: var(--text-primary);
             font-family: inherit;
@@ -701,14 +861,14 @@
 
         .notify-input:focus {
             outline: none;
-            border-color: var(--rust-bright);
-            background: var(--bg-elevated);
-            box-shadow: 0 0 0 4px var(--ember-glow);
+            border-color: var(--flame-ember);
+            background: rgba(42, 26, 16, 0.95);
+            box-shadow: 0 0 0 4px var(--flame-glow), 0 0 35px rgba(255, 107, 53, 0.18);
         }
 
         .notify-btn {
             padding: var(--space-md) var(--space-xl);
-            background: var(--rust-bright);
+            background: var(--flame-ember);
             color: #fff;
             border: none;
             border-radius: 12px;
@@ -721,9 +881,9 @@
         }
 
         .notify-btn:hover {
-            background: var(--ember-core);
+            background: var(--flame-core);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--ember-glow);
+            box-shadow: 0 10px 32px var(--flame-glow);
         }
 
         .notify-btn:active {
@@ -747,20 +907,30 @@
         }
 
         .notify-message.success {
-            background: rgba(110, 197, 184, 0.1);
-            border: 1px solid rgba(110, 197, 184, 0.3);
+            background: rgba(110, 197, 184, 0.18);
+            border: 1px solid rgba(110, 197, 184, 0.45);
             color: var(--teal);
         }
 
         .notify-message.error {
-            background: rgba(224, 122, 122, 0.1);
-            border: 1px solid rgba(224, 122, 122, 0.3);
+            background: rgba(255, 123, 123, 0.18);
+            border: 1px solid rgba(255, 123, 123, 0.45);
             color: var(--error);
         }
 
         .notify-message.visible {
             display: flex;
             animation: fadeUp 0.3s var(--ease-out);
+        }
+
+        .notify-fallback {
+            margin-top: var(--space-sm);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .notify-fallback a {
+            color: var(--flame-ember);
         }
 
         /* Loading state */
@@ -792,13 +962,14 @@
            ═══════════════════════════════════════════════════════════════════════ */
         .about-section {
             padding: var(--space-lg);
-            background: var(--bg-surface);
-            border: 1px solid var(--bg-hover);
+            background: rgba(28, 18, 11, 0.75);
+            border: 1px solid rgba(255, 107, 53, 0.18);
             border-radius: 16px;
-            max-width: 580px;
+            max-width: 620px;
             margin-bottom: var(--space-2xl);
             opacity: 0;
             animation: fadeUp 0.6s var(--ease-out) 0.9s forwards;
+            backdrop-filter: blur(8px);
         }
 
         .about-content {
@@ -814,28 +985,29 @@
         }
 
         .about-avatar {
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, var(--rust-bright), var(--rust-deep));
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--flame-ember), var(--flame-deep));
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #fff;
             flex-shrink: 0;
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.35);
         }
 
         .about-text h3 {
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: var(--space-xs);
         }
 
         .about-text p {
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             color: var(--text-secondary);
             line-height: 1.6;
             margin-bottom: var(--space-sm);
@@ -850,14 +1022,14 @@
             display: inline-flex;
             align-items: center;
             gap: var(--space-xs);
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: 600;
-            color: var(--rust-bright);
+            color: var(--flame-ember);
             transition: color 0.2s;
         }
 
         .about-link:hover {
-            color: var(--ember-core);
+            color: var(--flame-bright);
         }
 
         .about-link svg {
@@ -883,7 +1055,7 @@
         }
 
         .footer-text {
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             color: var(--text-muted);
         }
 
@@ -893,46 +1065,114 @@
         }
 
         .footer-link {
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             color: var(--text-muted);
             transition: color 0.2s;
         }
 
         .footer-link:hover {
-            color: var(--rust-bright);
+            color: var(--flame-ember);
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           ACCESSIBILITY
+           ACCESSIBILITY & PROGRESSIVE ENHANCEMENT
            ═══════════════════════════════════════════════════════════════════════ */
         *:focus-visible {
-            outline: 2px solid var(--rust-bright);
+            outline: 2px solid var(--flame-ember);
             outline-offset: 2px;
         }
 
+        /* Skip to content link */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: var(--space-sm) var(--space-md);
+            background: var(--flame-ember);
+            color: #fff;
+            border-radius: 0 0 8px 8px;
+            font-weight: 600;
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
-            #ember-canvas {
-                display: none;
+            #ember-canvas,
+            .fire-glow-1,
+            .fire-glow-2,
+            .fire-glow-3,
+            .fire-glow-top {
+                display: none !important;
             }
+        }
+
+        /* Print styles */
+        @media print {
+            .fire-background,
+            .fire-glow-1,
+            .fire-glow-2,
+            .fire-glow-3,
+            .fire-glow-top,
+            #ember-canvas,
+            .argand-container,
+            .status-pill {
+                display: none !important;
+            }
+            body {
+                background: #fff;
+                color: #000;
+            }
+            .page-wrapper {
+                max-width: 100%;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           NOSCRIPT / TEXT-ONLY STYLES (for Lynx, etc.)
+           ═══════════════════════════════════════════════════════════════════════ */
+        noscript .text-only-notice {
+            padding: var(--space-md);
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 8px;
+            margin-bottom: var(--space-lg);
         }
     </style>
 </head>
 <body>
+    <!-- Skip to content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- Fire Background Layers -->
+    <div class="fire-background" aria-hidden="true"></div>
+    <div class="fire-glow-top" aria-hidden="true"></div>
+    <div class="fire-glow-1" aria-hidden="true"></div>
+    <div class="fire-glow-2" aria-hidden="true"></div>
+    <div class="fire-glow-3" aria-hidden="true"></div>
+
     <!-- Ember Particle Canvas -->
     <canvas id="ember-canvas" aria-hidden="true"></canvas>
-    <div class="ember-gradient" aria-hidden="true"></div>
 
-    <!-- Argand Diagram -->
+    <!-- Argand Diagram - More Prominent -->
     <div class="argand-container" aria-hidden="true">
         <div class="argand-diagram">
             <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                <!-- Grid -->
-                <g stroke="rgba(233, 116, 81, 0.1)" stroke-width="1">
+                <!-- Outer glow ring -->
+                <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(255, 107, 53, 0.08)" stroke-width="40"/>
+
+                <!-- Subtle grid -->
+                <g stroke="rgba(255, 107, 53, 0.1)" stroke-width="1">
                     <line x1="100" y1="40" x2="100" y2="360"/>
                     <line x1="200" y1="40" x2="200" y2="360"/>
                     <line x1="300" y1="40" x2="300" y2="360"/>
@@ -942,38 +1182,51 @@
                 </g>
 
                 <!-- Axes -->
-                <g stroke="rgba(233, 116, 81, 0.4)" stroke-width="2">
+                <g stroke="rgba(255, 107, 53, 0.45)" stroke-width="2.5">
                     <line x1="20" y1="200" x2="380" y2="200"/>
                     <line x1="200" y1="20" x2="200" y2="380"/>
                 </g>
 
                 <!-- Arrows -->
-                <g fill="rgba(233, 116, 81, 0.4)">
-                    <polygon points="380,200 368,194 368,206"/>
-                    <polygon points="200,20 194,32 206,32"/>
+                <g fill="rgba(255, 107, 53, 0.45)">
+                    <polygon points="380,200 365,192 365,208"/>
+                    <polygon points="200,20 192,35 208,35"/>
                 </g>
 
                 <!-- Unit circle (rotating) -->
                 <g class="unit-circle-group">
-                    <circle cx="200" cy="200" r="80" fill="none" stroke="rgba(233, 116, 81, 0.25)" stroke-width="1.5" stroke-dasharray="6 4"/>
+                    <circle cx="200" cy="200" r="80" fill="none" stroke="rgba(255, 107, 53, 0.28)" stroke-width="2" stroke-dasharray="8 5"/>
                 </g>
 
                 <!-- Labels -->
-                <g font-family="'Atkinson Hyperlegible', sans-serif" font-size="13" fill="rgba(233, 116, 81, 0.5)">
-                    <text x="365" y="193" font-weight="600">Re</text>
-                    <text x="208" y="35" font-weight="600">Im</text>
-                    <text x="276" y="215" font-size="11">1</text>
-                    <text x="116" y="215" font-size="11">-1</text>
-                    <text x="207" y="125" font-size="11">i</text>
-                    <text x="207" y="290" font-size="11">-i</text>
+                <g font-family="'Atkinson Hyperlegible', sans-serif" font-size="15" fill="rgba(255, 107, 53, 0.55)" font-weight="700">
+                    <text x="358" y="190">Re</text>
+                    <text x="210" y="38">Im</text>
+                    <text x="278" y="220" font-size="13" font-weight="400">1</text>
+                    <text x="108" y="220" font-size="13" font-weight="400">-1</text>
+                    <text x="212" y="124" font-size="13" font-weight="400">i</text>
+                    <text x="208" y="294" font-size="13" font-weight="400">-i</text>
                 </g>
 
-                <!-- Origin -->
-                <circle cx="200" cy="200" r="4" fill="rgba(233, 116, 81, 0.5)"/>
+                <!-- Origin with glow -->
+                <circle cx="200" cy="200" r="5" fill="rgba(255, 107, 53, 0.6)"/>
+                <circle cx="200" cy="200" r="10" fill="none" stroke="rgba(255, 107, 53, 0.2)" stroke-width="2"/>
 
-                <!-- Orbiting point -->
-                <g class="orbiting-point">
-                    <circle class="complex-point" cx="200" cy="120" r="5" fill="#6EC5B8"/>
+                <!-- Orbiting point on unit circle -->
+                <g class="orbit-group">
+                    <circle cx="280" cy="200" r="7" fill="#6EC5B8">
+                        <animate attributeName="r" values="7;10;7" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <!-- Outer glow -->
+                    <circle cx="280" cy="200" r="15" fill="none" stroke="rgba(110, 197, 184, 0.4)" stroke-width="3">
+                        <animate attributeName="r" values="15;22;15" dur="2s" repeatCount="indefinite"/>
+                        <animate attributeName="stroke-opacity" values="0.4;0.15;0.4" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <!-- Trail effect -->
+                    <circle cx="280" cy="200" r="25" fill="none" stroke="rgba(110, 197, 184, 0.15)" stroke-width="2">
+                        <animate attributeName="r" values="25;35;25" dur="2s" repeatCount="indefinite"/>
+                        <animate attributeName="stroke-opacity" values="0.15;0.05;0.15" dur="2s" repeatCount="indefinite"/>
+                    </circle>
                 </g>
             </svg>
         </div>
@@ -983,90 +1236,120 @@
     <div class="page-wrapper">
         <header>
             <a href="/" class="logo" aria-label="Argand home">Argand</a>
-            <div class="status-pill">
+            <button class="status-pill" id="statusPill" type="button" aria-label="In development - click to get notified">
                 <span class="status-dot" aria-hidden="true"></span>
                 <span>In Development</span>
-            </div>
+            </button>
         </header>
 
-        <main class="hero">
-            <p class="hero-intro">The Way It Should Be</p>
+        <main class="hero" id="main-content">
+            <!-- Noscript fallback for text-only browsers -->
+            <noscript>
+                <div class="text-only-notice">
+                    <p><strong>Argand</strong> — The search engine that gives you the exact result you want, first try, every time.</p>
+                    <p>JavaScript is disabled. All content is accessible below. To sign up for launch notifications, email: <a href="mailto:NicWeyand@ProtonMail.com">NicWeyand@ProtonMail.com</a></p>
+                </div>
+            </noscript>
 
-            <h1>Search, maps, weather—<br><span class="highlight">done right</span></h1>
+            <p class="hero-intro">Stop Scrolling Through Garbage</p>
+
+            <h1>The <span class="highlight">exact result</span> you want,<br>first try, every time</h1>
 
             <p class="hero-description">
-                Why isn't every service like this? <strong>No tracking. No profiling. No selling your data.</strong>
-                These should be the baseline, not premium features. We're building what should be standard.
+                Search that actually understands what you're looking for. <strong>Not pages of SEO spam.</strong>
+                Not ads disguised as results. Just the answer you needed, immediately.
             </p>
 
             <!-- Services with expandable details -->
-            <div class="services">
-                <article class="service-card" tabindex="0" role="button" aria-expanded="false">
-                    <div class="service-header">
+            <div class="services" role="list">
+                <article class="service-card" data-card="search" role="listitem">
+                    <div class="service-header" tabindex="0" role="button" aria-expanded="false" aria-controls="search-details">
                         <div class="service-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <circle cx="11" cy="11" r="8"/>
                                 <path d="m21 21-4.3-4.3"/>
                             </svg>
                         </div>
                         <div class="service-info">
                             <h2 class="service-title">Search</h2>
-                            <p class="service-tagline">Intent-aware results</p>
+                            <p class="service-tagline">Finds what you mean</p>
                         </div>
-                        <svg class="expand-indicator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="expand-indicator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="6 9 12 15 18 9"/>
                         </svg>
                     </div>
-                    <div class="service-details">
+                    <div class="service-details" id="search-details">
                         <div class="service-details-inner">
                             <p class="service-description">
-                                Hybrid search combining BM25 lexical matching with semantic embeddings.
-                                Learning-to-rank with 16+ signals. No sponsored results disguised as organic.
+                                Understands your intent, not just keywords. Combines multiple search techniques to find exactly what you're after. No sponsored results pretending to be organic hits.
                             </p>
                             <div class="service-features">
-                                <span class="feature-tag">Spell correction</span>
-                                <span class="feature-tag">Query understanding</span>
-                                <span class="feature-tag">Domain authority</span>
+                                <button class="feature-tag" data-def="intent" type="button">Intent Detection</button>
+                                <button class="feature-tag" data-def="hybrid" type="button">Hybrid Matching</button>
+                                <button class="feature-tag" data-def="ranking" type="button">Smart Ranking</button>
+                            </div>
+                            <div class="feature-definition" id="def-intent">
+                                <div class="feature-definition-title">Intent Detection</div>
+                                <p class="feature-definition-text">We figure out what you actually want. Searching "python" near a code file? Programming docs. Near a pet store? The snake. Context matters.</p>
+                            </div>
+                            <div class="feature-definition" id="def-hybrid">
+                                <div class="feature-definition-title">Hybrid Matching</div>
+                                <p class="feature-definition-text">Combines exact keyword matching with AI-powered meaning analysis. Finds results even when you don't use the exact right words.</p>
+                            </div>
+                            <div class="feature-definition" id="def-ranking">
+                                <div class="feature-definition-title">Smart Ranking</div>
+                                <p class="feature-definition-text">Uses 16+ signals to rank results by actual relevance. Not by who paid the most, not by SEO tricks. Just genuine quality.</p>
                             </div>
                         </div>
                     </div>
                 </article>
 
-                <article class="service-card" tabindex="0" role="button" aria-expanded="false">
-                    <div class="service-header">
+                <article class="service-card" data-card="maps" role="listitem">
+                    <div class="service-header" tabindex="0" role="button" aria-expanded="false" aria-controls="maps-details">
                         <div class="service-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
                                 <circle cx="12" cy="10" r="3"/>
                             </svg>
                         </div>
                         <div class="service-info">
                             <h2 class="service-title">Maps</h2>
-                            <p class="service-tagline">Navigate freely</p>
+                            <p class="service-tagline">Navigate with values</p>
                         </div>
-                        <svg class="expand-indicator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="expand-indicator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="6 9 12 15 18 9"/>
                         </svg>
                     </div>
-                    <div class="service-details">
+                    <div class="service-details" id="maps-details">
                         <div class="service-details-inner">
                             <p class="service-description">
-                                Routing with values: find co-ops, union shops, mutual aid. Anti-surveillance mode
-                                routes around CCTV using EFF Atlas data. Carbon-aware route options.
+                                Find co-ops, local shops, and ethical businesses. Route around surveillance cameras if you want. Carbon-aware routing options. Works offline too.
                             </p>
                             <div class="service-features">
-                                <span class="feature-tag">Anti-surveillance</span>
-                                <span class="feature-tag">Values routing</span>
-                                <span class="feature-tag">Offline support</span>
+                                <button class="feature-tag" data-def="values" type="button">Values Routing</button>
+                                <button class="feature-tag" data-def="privacy-route" type="button">Privacy Routes</button>
+                                <button class="feature-tag" data-def="offline" type="button">Offline Mode</button>
+                            </div>
+                            <div class="feature-definition" id="def-values">
+                                <div class="feature-definition-title">Values Routing</div>
+                                <p class="feature-definition-text">Filter for worker-owned co-ops, union shops, B-corps, or local businesses. Find places that align with what you care about.</p>
+                            </div>
+                            <div class="feature-definition" id="def-privacy-route">
+                                <div class="feature-definition-title">Privacy Routes</div>
+                                <p class="feature-definition-text">Uses EFF's Atlas data to show routes that avoid CCTV and license plate readers. Your commute, your choice.</p>
+                            </div>
+                            <div class="feature-definition" id="def-offline">
+                                <div class="feature-definition-title">Offline Mode</div>
+                                <p class="feature-definition-text">Download maps for offline use. Navigate in tunnels, on planes, or anywhere without signal. No connection required.</p>
                             </div>
                         </div>
                     </div>
                 </article>
 
-                <article class="service-card" tabindex="0" role="button" aria-expanded="false">
-                    <div class="service-header">
+                <article class="service-card" data-card="weather" role="listitem">
+                    <div class="service-header" tabindex="0" role="button" aria-expanded="false" aria-controls="weather-details">
                         <div class="service-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
                             </svg>
                         </div>
@@ -1074,29 +1357,40 @@
                             <h2 class="service-title">Weather</h2>
                             <p class="service-tagline">Hyperlocal forecasts</p>
                         </div>
-                        <svg class="expand-indicator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="expand-indicator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="6 9 12 15 18 9"/>
                         </svg>
                     </div>
-                    <div class="service-details">
+                    <div class="service-details" id="weather-details">
                         <div class="service-details-inner">
                             <p class="service-description">
-                                Neighborhood-level forecasts from trusted sources. Emergency geo-fenced alerts.
-                                Check conditions anywhere without becoming a data point.
+                                Neighborhood-level accuracy from trusted sources. Emergency geo-fenced alerts for severe weather. Check any location without leaving a trace.
                             </p>
                             <div class="service-features">
-                                <span class="feature-tag">Emergency alerts</span>
-                                <span class="feature-tag">No location history</span>
-                                <span class="feature-tag">API available</span>
+                                <button class="feature-tag" data-def="alerts" type="button">Emergency Alerts</button>
+                                <button class="feature-tag" data-def="noloc" type="button">No Location Logs</button>
+                                <button class="feature-tag" data-def="api" type="button">Open API</button>
+                            </div>
+                            <div class="feature-definition" id="def-alerts">
+                                <div class="feature-definition-title">Emergency Alerts</div>
+                                <p class="feature-definition-text">Get notified about severe weather in your area. Geo-fenced to your location, then immediately forgotten. Safety without surveillance.</p>
+                            </div>
+                            <div class="feature-definition" id="def-noloc">
+                                <div class="feature-definition-title">No Location Logs</div>
+                                <p class="feature-definition-text">Check weather anywhere. We process your request and forget it happened. No location history, ever.</p>
+                            </div>
+                            <div class="feature-definition" id="def-api">
+                                <div class="feature-definition-title">Open API</div>
+                                <p class="feature-definition-text">Build your own weather apps on top of Argand. Free tier for personal projects. Same privacy guarantees.</p>
                             </div>
                         </div>
                     </div>
                 </article>
 
-                <article class="service-card" tabindex="0" role="button" aria-expanded="false">
-                    <div class="service-header">
+                <article class="service-card" data-card="discovery" role="listitem">
+                    <div class="service-header" tabindex="0" role="button" aria-expanded="false" aria-controls="discovery-details">
                         <div class="service-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3Z"/>
                             </svg>
                         </div>
@@ -1104,20 +1398,31 @@
                             <h2 class="service-title">Discovery</h2>
                             <p class="service-tagline">Find something new</p>
                         </div>
-                        <svg class="expand-indicator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="expand-indicator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="6 9 12 15 18 9"/>
                         </svg>
                     </div>
-                    <div class="service-details">
+                    <div class="service-details" id="discovery-details">
                         <div class="service-details-inner">
                             <p class="service-description">
-                                Recommendations with built-in serendipity—20% are intentionally "adventurous."
-                                Anonymous preference tokens mean personalization without profiling.
+                                Personalized recommendations without a profile on you. 20% "adventure picks" to break you out of bubbles. Export everything anytime.
                             </p>
                             <div class="service-features">
-                                <span class="feature-tag">Serendipity engine</span>
-                                <span class="feature-tag">Anonymous tokens</span>
-                                <span class="feature-tag">Full export</span>
+                                <button class="feature-tag" data-def="serendipity" type="button">Serendipity Mode</button>
+                                <button class="feature-tag" data-def="anon-tokens" type="button">Anonymous Tokens</button>
+                                <button class="feature-tag" data-def="export" type="button">Full Export</button>
+                            </div>
+                            <div class="feature-definition" id="def-serendipity">
+                                <div class="feature-definition-title">Serendipity Mode</div>
+                                <p class="feature-definition-text">20% of recommendations are intentionally outside your usual patterns. Discover things algorithms would never show you.</p>
+                            </div>
+                            <div class="feature-definition" id="def-anon-tokens">
+                                <div class="feature-definition-title">Anonymous Tokens</div>
+                                <p class="feature-definition-text">Your preferences are stored as encrypted tokens you control. Personalization without us knowing who you are.</p>
+                            </div>
+                            <div class="feature-definition" id="def-export">
+                                <div class="feature-definition-title">Full Export</div>
+                                <p class="feature-definition-text">Download all your data anytime in standard formats. Take it to another service. No lock-in, ever.</p>
                             </div>
                         </div>
                     </div>
@@ -1125,106 +1430,133 @@
             </div>
 
             <!-- Philosophy section -->
-            <section class="philosophy">
+            <section class="philosophy" aria-labelledby="philosophy-heading">
                 <div class="philosophy-card">
-                    <h2 class="philosophy-headline">This should be the standard.</h2>
+                    <h2 class="philosophy-headline" id="philosophy-heading">This should be the standard.</h2>
                     <p class="philosophy-text">
-                        Privacy isn't a feature we're selling—it's just how things should work.
-                        Your IP is HMAC-scrambled before we even see it. Anonymous sessions auto-delete in an hour.
-                        We literally cannot build a profile on you, even if someone asked us to.
+                        Privacy isn't a premium feature we're upselling. It's how every service should work by default.
+                        Your IP is scrambled before we even see it. Sessions auto-delete in an hour.
+                        We literally cannot build a profile on you, even if someone demanded it.
                     </p>
                     <div class="philosophy-points">
                         <div class="philosophy-point">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <polyline points="20 6 9 17 4 12"/>
                             </svg>
                             <span>IPs scrambled by design</span>
                         </div>
                         <div class="philosophy-point">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <polyline points="20 6 9 17 4 12"/>
                             </svg>
                             <span>100% open source</span>
                         </div>
                         <div class="philosophy-point">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <polyline points="20 6 9 17 4 12"/>
                             </svg>
                             <span>Carbon negative goal</span>
                         </div>
                         <div class="philosophy-point">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <polyline points="20 6 9 17 4 12"/>
                             </svg>
-                            <span>Independent infrastructure</span>
+                            <span>No Big Tech dependencies</span>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- Tech highlights -->
-            <section class="tech-section">
-                <h3 class="tech-label">Under the hood</h3>
-                <div class="tech-grid">
-                    <div class="tech-item" tabindex="0" role="button" aria-expanded="false">
+            <section class="tech-section" aria-labelledby="tech-heading">
+                <h3 class="tech-label" id="tech-heading">Under the hood</h3>
+                <div class="tech-grid" role="list">
+                    <div class="tech-item" role="listitem" tabindex="0" data-tech="rengoku">
                         <div class="tech-item-header">
                             <span class="tech-item-title">Rengoku QA</span>
-                            <span class="tech-item-icon">🔥</span>
+                            <span class="tech-item-icon" aria-hidden="true">🔥</span>
                         </div>
                         <div class="tech-item-desc">
-                            <p>Extractive-only answers from sources. Returns exact quotes with provenance. Zero hallucinations.</p>
+                            <p>Answers come with exact quotes and sources. We only extract from what's actually written—no AI making things up. Zero hallucinations.</p>
                         </div>
                     </div>
-                    <div class="tech-item" tabindex="0" role="button" aria-expanded="false">
+                    <div class="tech-item" role="listitem" tabindex="0" data-tech="hybrid">
                         <div class="tech-item-header">
                             <span class="tech-item-title">Hybrid Search</span>
-                            <span class="tech-item-icon">⚡</span>
+                            <span class="tech-item-icon" aria-hidden="true">⚡</span>
                         </div>
                         <div class="tech-item-desc">
-                            <p>BM25 + semantic embeddings + learning-to-rank. 16+ ranking signals. Auditable, not a black box.</p>
+                            <p>Keyword matching + semantic understanding + 16 ranking signals. You can see exactly why each result ranked where it did. Fully transparent.</p>
                         </div>
                     </div>
-                    <div class="tech-item" tabindex="0" role="button" aria-expanded="false">
+                    <div class="tech-item" role="listitem" tabindex="0" data-tech="eff">
                         <div class="tech-item-header">
                             <span class="tech-item-title">EFF Atlas</span>
-                            <span class="tech-item-icon">🗺️</span>
+                            <span class="tech-item-icon" aria-hidden="true">🗺️</span>
                         </div>
                         <div class="tech-item-desc">
-                            <p>Anti-surveillance routing using EFF's camera/ALPR database. Navigate without being watched.</p>
+                            <p>Anti-surveillance routing using EFF's camera database. Navigate around CCTV and license plate readers. Your movement, your choice.</p>
                         </div>
                     </div>
-                    <div class="tech-item" tabindex="0" role="button" aria-expanded="false">
+                    <div class="tech-item" role="listitem" tabindex="0" data-tech="fdb">
                         <div class="tech-item-header">
                             <span class="tech-item-title">FoundationDB</span>
-                            <span class="tech-item-icon">🏛️</span>
+                            <span class="tech-item-icon" aria-hidden="true">🏛️</span>
                         </div>
                         <div class="tech-item-desc">
-                            <p>ACID-compliant distributed storage, open-sourced by Apple. Serious infrastructure.</p>
+                            <p>ACID-compliant distributed database, battle-tested and open-sourced by Apple. Serious infrastructure for serious reliability.</p>
                         </div>
                     </div>
-                    <div class="tech-item" tabindex="0" role="button" aria-expanded="false">
+                    <div class="tech-item" role="listitem" tabindex="0" data-tech="rust">
                         <div class="tech-item-header">
                             <span class="tech-item-title">Rust Core</span>
-                            <span class="tech-item-icon">🦀</span>
+                            <span class="tech-item-icon" aria-hidden="true">🦀</span>
                         </div>
                         <div class="tech-item-desc">
-                            <p>Safe, fast, memory-efficient. No garbage collection pauses. Minimal compute for maximum power.</p>
+                            <p>Memory-safe, blazingly fast, with no garbage collection pauses. Minimal compute, maximum power. Built to last.</p>
                         </div>
                     </div>
-                    <div class="tech-item" tabindex="0" role="button" aria-expanded="false">
+                    <div class="tech-item" role="listitem" tabindex="0" data-tech="selfhost">
                         <div class="tech-item-header">
                             <span class="tech-item-title">Self-Hostable</span>
-                            <span class="tech-item-icon">🏠</span>
+                            <span class="tech-item-icon" aria-hidden="true">🏠</span>
                         </div>
                         <div class="tech-item-desc">
-                            <p>Run your own instance. Full FOSS stack. No vendor lock-in. Fork it if you want.</p>
+                            <p>Run your own instance. Entire stack is FOSS. Fork it, modify it, make it yours. No vendor lock-in whatsoever.</p>
+                        </div>
+                    </div>
+                    <div class="tech-item" role="listitem" tabindex="0" data-tech="plane">
+                        <div class="tech-item-header">
+                            <span class="tech-item-title">Argand Plane</span>
+                            <span class="tech-item-icon" aria-hidden="true">📐</span>
+                        </div>
+                        <div class="tech-item-desc">
+                            <p>Our in-house vector database for semantic search. Built specifically for Argand. Open source like everything else.</p>
+                        </div>
+                    </div>
+                    <div class="tech-item" role="listitem" tabindex="0" data-tech="ltr">
+                        <div class="tech-item-header">
+                            <span class="tech-item-title">Learning to Rank</span>
+                            <span class="tech-item-icon" aria-hidden="true">📊</span>
+                        </div>
+                        <div class="tech-item-desc">
+                            <p>ML model that improves search quality over time. Trained on what works, not on what advertisers pay for.</p>
+                        </div>
+                    </div>
+                    <div class="tech-item" role="listitem" tabindex="0" data-tech="did">
+                        <div class="tech-item-header">
+                            <span class="tech-item-title">DID Auth</span>
+                            <span class="tech-item-icon" aria-hidden="true">🔐</span>
+                        </div>
+                        <div class="tech-item-desc">
+                            <p>Decentralized identity—you control your own credentials. No passwords stored on our servers. Cryptographic proof of who you are.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- Email signup -->
-            <section class="notify-section" aria-labelledby="notify-heading">
+            <section class="notify-section" id="notifySection" aria-labelledby="notify-heading">
                 <label class="notify-label" id="notify-heading">Get notified when we launch</label>
                 <form class="notify-form" id="notifyForm" action="https://formspree.io/f/xnjaqwpq" method="POST">
                     <input
@@ -1235,39 +1567,43 @@
                         placeholder="you@example.com"
                         required
                         autocomplete="email"
+                        aria-describedby="notify-fallback"
                     >
                     <input type="hidden" name="_subject" value="Argand Launch Notification">
                     <button type="submit" class="notify-btn" id="notifyBtn">Notify Me</button>
                 </form>
-                <p class="notify-message success" id="successMsg" role="status">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <p class="notify-message success" id="successMsg" role="status" aria-live="polite">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="20 6 9 17 4 12"/>
                     </svg>
                     You're on the list. We'll email you when Argand launches.
                 </p>
-                <p class="notify-message error" id="errorMsg" role="alert">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <p class="notify-message error" id="errorMsg" role="alert" aria-live="assertive">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <circle cx="12" cy="12" r="10"/>
                         <line x1="15" y1="9" x2="9" y2="15"/>
                         <line x1="9" y1="9" x2="15" y2="15"/>
                     </svg>
-                    Something went wrong. Please try again.
+                    Something went wrong. Please try again or email us directly.
+                </p>
+                <p class="notify-fallback" id="notify-fallback">
+                    Or email directly: <a href="mailto:NicWeyand@ProtonMail.com">NicWeyand@ProtonMail.com</a>
                 </p>
             </section>
 
             <!-- About -->
-            <section class="about-section">
+            <section class="about-section" aria-labelledby="about-heading">
                 <div class="about-content">
                     <div class="about-avatar" aria-hidden="true">N</div>
                     <div class="about-text">
-                        <h3>Built by Nic Weyand</h3>
+                        <h3 id="about-heading">Built by Nic Weyand</h3>
                         <p>
-                            Solo developer, tired of the status quo. Building what I wish existed—100%
-                            open source, because this is how all services should work.
+                            Solo developer, frustrated by the state of things. Building what I wish existed—100%
+                            open source, because this is simply how services should work.
                         </p>
                         <div class="about-links">
                             <a href="https://github.com/nicweyand" class="about-link" target="_blank" rel="noopener noreferrer">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                                 </svg>
                                 GitHub
@@ -1280,10 +1616,10 @@
 
         <footer>
             <div class="footer-content">
-                <p class="footer-text">&copy; 2025 Argand. The way it should be.</p>
-                <nav class="footer-links">
+                <p class="footer-text">&copy; 2026 Argand. The way it should be.</p>
+                <nav class="footer-links" aria-label="Footer navigation">
                     <a href="https://github.com/nicweyand" class="footer-link">GitHub</a>
-                    <a href="mailto:contact@argand.org" class="footer-link">Contact</a>
+                    <a href="mailto:NicWeyand@ProtonMail.com" class="footer-link">Contact</a>
                 </nav>
             </div>
         </footer>
@@ -1298,93 +1634,123 @@
             'use strict';
 
             // ═══════════════════════════════════════════════════════════════════════
-            // EMBER PARTICLE ANIMATION
+            // PROGRESSIVE ENHANCEMENT - Detect slow connections
             // ═══════════════════════════════════════════════════════════════════════
-            var canvas = document.getElementById('ember-canvas');
-            var ctx = canvas.getContext('2d');
-            var embers = [];
-            var emberCount = 35;
-            var animationId = null;
+            var isSlowConnection = false;
+            if ('connection' in navigator) {
+                var conn = navigator.connection;
+                var slowTypes = ['slow-2g', '2g', '3g'];
+                if (conn.effectiveType && slowTypes.indexOf(conn.effectiveType) !== -1) {
+                    isSlowConnection = true;
+                }
+                if (conn.saveData) {
+                    isSlowConnection = true;
+                }
+            }
 
             // Check for reduced motion preference
             var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+            // Apply low-bandwidth mode
+            if (isSlowConnection || prefersReducedMotion) {
+                document.body.classList.add('low-bandwidth');
             }
 
-            function createEmber() {
-                return {
-                    x: Math.random() * canvas.width,
-                    y: canvas.height + Math.random() * 100,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: -(Math.random() * 1.5 + 0.5),
-                    size: Math.random() * 3 + 1.5,
-                    opacity: Math.random() * 0.6 + 0.2,
-                    glowSize: Math.random() * 8 + 4
-                };
-            }
+            // ═══════════════════════════════════════════════════════════════════════
+            // EMBER PARTICLE ANIMATION (skip if slow connection)
+            // ═══════════════════════════════════════════════════════════════════════
+            if (!isSlowConnection && !prefersReducedMotion) {
+                var canvas = document.getElementById('ember-canvas');
+                var ctx = canvas.getContext('2d');
+                var embers = [];
+                var emberCount = 45;
 
-            function initEmbers() {
-                embers = [];
-                for (var i = 0; i < emberCount; i++) {
-                    var ember = createEmber();
-                    ember.y = Math.random() * canvas.height;
-                    embers.push(ember);
+                function resizeCanvas() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
                 }
-            }
 
-            function updateEmbers() {
-                embers.forEach(function(ember) {
-                    ember.x += ember.vx;
-                    ember.y += ember.vy;
-                    ember.opacity -= 0.002;
+                function createEmber() {
+                    var colors = [
+                        { r: 255, g: 107, b: 53 },
+                        { r: 255, g: 140, b: 66 },
+                        { r: 233, g: 116, b: 81 },
+                        { r: 255, g: 179, b: 71 },
+                        { r: 255, g: 200, b: 100 }
+                    ];
+                    var color = colors[Math.floor(Math.random() * colors.length)];
 
-                    // Slight horizontal drift
-                    ember.vx += (Math.random() - 0.5) * 0.02;
-                    ember.vx = Math.max(-0.5, Math.min(0.5, ember.vx));
+                    return {
+                        x: Math.random() * canvas.width,
+                        y: canvas.height + Math.random() * 50,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: -(Math.random() * 1.8 + 0.6),
+                        size: Math.random() * 3 + 1,
+                        opacity: Math.random() * 0.65 + 0.25,
+                        glowSize: Math.random() * 10 + 5,
+                        color: color,
+                        flicker: Math.random() * Math.PI * 2
+                    };
+                }
 
-                    // Reset if off screen or faded
-                    if (ember.y < -20 || ember.opacity <= 0) {
-                        Object.assign(ember, createEmber());
+                function initEmbers() {
+                    embers = [];
+                    for (var i = 0; i < emberCount; i++) {
+                        var ember = createEmber();
+                        ember.y = Math.random() * canvas.height;
+                        embers.push(ember);
                     }
-                });
-            }
+                }
 
-            function drawEmbers() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                function updateEmbers() {
+                    for (var i = 0; i < embers.length; i++) {
+                        var ember = embers[i];
+                        ember.x += ember.vx;
+                        ember.y += ember.vy;
+                        ember.opacity -= 0.0018;
+                        ember.flicker += 0.08;
 
-                embers.forEach(function(ember) {
-                    // Outer glow
-                    var gradient = ctx.createRadialGradient(
-                        ember.x, ember.y, 0,
-                        ember.x, ember.y, ember.glowSize
-                    );
-                    gradient.addColorStop(0, 'rgba(233, 116, 81, ' + (ember.opacity * 0.6) + ')');
-                    gradient.addColorStop(1, 'rgba(233, 116, 81, 0)');
+                        ember.vx += (Math.random() - 0.5) * 0.025;
+                        ember.vx = Math.max(-0.6, Math.min(0.6, ember.vx));
 
-                    ctx.fillStyle = gradient;
-                    ctx.beginPath();
-                    ctx.arc(ember.x, ember.y, ember.glowSize, 0, Math.PI * 2);
-                    ctx.fill();
+                        if (ember.y < -25 || ember.opacity <= 0) {
+                            embers[i] = createEmber();
+                        }
+                    }
+                }
 
-                    // Core
-                    ctx.fillStyle = 'rgba(255, 200, 150, ' + ember.opacity + ')';
-                    ctx.beginPath();
-                    ctx.arc(ember.x, ember.y, ember.size, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-            }
+                function drawEmbers() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            function animate() {
-                updateEmbers();
-                drawEmbers();
-                animationId = requestAnimationFrame(animate);
-            }
+                    for (var i = 0; i < embers.length; i++) {
+                        var ember = embers[i];
+                        var flickerOpacity = ember.opacity * (0.8 + Math.sin(ember.flicker) * 0.2);
 
-            // Initialize canvas animation if motion is allowed
-            if (!prefersReducedMotion) {
+                        var gradient = ctx.createRadialGradient(
+                            ember.x, ember.y, 0,
+                            ember.x, ember.y, ember.glowSize
+                        );
+                        gradient.addColorStop(0, 'rgba(' + ember.color.r + ',' + ember.color.g + ',' + ember.color.b + ',' + (flickerOpacity * 0.45) + ')');
+                        gradient.addColorStop(1, 'rgba(' + ember.color.r + ',' + ember.color.g + ',' + ember.color.b + ', 0)');
+
+                        ctx.fillStyle = gradient;
+                        ctx.beginPath();
+                        ctx.arc(ember.x, ember.y, ember.glowSize, 0, Math.PI * 2);
+                        ctx.fill();
+
+                        ctx.fillStyle = 'rgba(255, 235, 210, ' + flickerOpacity + ')';
+                        ctx.beginPath();
+                        ctx.arc(ember.x, ember.y, ember.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                function animate() {
+                    updateEmbers();
+                    drawEmbers();
+                    requestAnimationFrame(animate);
+                }
+
                 resizeCanvas();
                 initEmbers();
                 animate();
@@ -1396,47 +1762,168 @@
             }
 
             // ═══════════════════════════════════════════════════════════════════════
-            // EXPANDABLE CARDS
+            // SERVICE CARDS - Fixed accordion (only ONE opens at a time)
             // ═══════════════════════════════════════════════════════════════════════
-            function setupExpandables(selector) {
-                var items = document.querySelectorAll(selector);
-                items.forEach(function(item) {
-                    item.addEventListener('click', function() {
-                        var isExpanded = this.classList.contains('expanded');
-                        // Close all others in the same group
-                        items.forEach(function(other) {
-                            other.classList.remove('expanded');
-                            other.setAttribute('aria-expanded', 'false');
-                        });
-                        // Toggle current
-                        if (!isExpanded) {
-                            this.classList.add('expanded');
-                            this.setAttribute('aria-expanded', 'true');
+            var serviceHeaders = document.querySelectorAll('.service-card .service-header');
+            var currentOpenCard = null;
+
+            function closeAllCards() {
+                var allCards = document.querySelectorAll('.service-card');
+                for (var i = 0; i < allCards.length; i++) {
+                    allCards[i].classList.remove('expanded');
+                    var header = allCards[i].querySelector('.service-header');
+                    if (header) header.setAttribute('aria-expanded', 'false');
+                    // Clear feature definitions
+                    var defs = allCards[i].querySelectorAll('.feature-definition');
+                    for (var j = 0; j < defs.length; j++) {
+                        defs[j].classList.remove('visible');
+                    }
+                    var tags = allCards[i].querySelectorAll('.feature-tag');
+                    for (var k = 0; k < tags.length; k++) {
+                        tags[k].classList.remove('active');
+                    }
+                }
+                currentOpenCard = null;
+            }
+
+            function toggleCard(card) {
+                var header = card.querySelector('.service-header');
+                var isOpen = card.classList.contains('expanded');
+
+                closeAllCards();
+
+                if (!isOpen) {
+                    card.classList.add('expanded');
+                    header.setAttribute('aria-expanded', 'true');
+                    currentOpenCard = card;
+                }
+            }
+
+            for (var i = 0; i < serviceHeaders.length; i++) {
+                (function(header) {
+                    header.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var card = this.closest('.service-card');
+                        toggleCard(card);
+                    });
+
+                    header.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            var card = this.closest('.service-card');
+                            toggleCard(card);
                         }
+                    });
+                })(serviceHeaders[i]);
+            }
+
+            // ═══════════════════════════════════════════════════════════════════════
+            // FEATURE TAGS - Click to show definitions
+            // ═══════════════════════════════════════════════════════════════════════
+            var featureTags = document.querySelectorAll('.feature-tag');
+
+            for (var i = 0; i < featureTags.length; i++) {
+                (function(tag) {
+                    tag.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        var defId = 'def-' + this.getAttribute('data-def');
+                        var def = document.getElementById(defId);
+                        var card = this.closest('.service-card');
+
+                        if (def && card) {
+                            var isShowing = def.classList.contains('visible');
+
+                            // Hide all definitions in this card
+                            var allDefs = card.querySelectorAll('.feature-definition');
+                            for (var j = 0; j < allDefs.length; j++) {
+                                allDefs[j].classList.remove('visible');
+                            }
+                            var allTags = card.querySelectorAll('.feature-tag');
+                            for (var k = 0; k < allTags.length; k++) {
+                                allTags[k].classList.remove('active');
+                            }
+
+                            if (!isShowing) {
+                                def.classList.add('visible');
+                                this.classList.add('active');
+                            }
+                        }
+                    });
+                })(featureTags[i]);
+            }
+
+            // ═══════════════════════════════════════════════════════════════════════
+            // TECH ITEMS - Accordion behavior (only ONE opens at a time)
+            // ═══════════════════════════════════════════════════════════════════════
+            var techItems = document.querySelectorAll('.tech-item');
+            var currentOpenTech = null;
+
+            function closeAllTechItems() {
+                for (var i = 0; i < techItems.length; i++) {
+                    techItems[i].classList.remove('expanded');
+                }
+                currentOpenTech = null;
+            }
+
+            function toggleTechItem(item) {
+                var isOpen = item.classList.contains('expanded');
+
+                closeAllTechItems();
+
+                if (!isOpen) {
+                    item.classList.add('expanded');
+                    currentOpenTech = item;
+                }
+            }
+
+            for (var i = 0; i < techItems.length; i++) {
+                (function(item) {
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleTechItem(this);
                     });
 
                     item.addEventListener('keydown', function(e) {
                         if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            this.click();
+                            e.stopPropagation();
+                            toggleTechItem(this);
                         }
                     });
+                })(techItems[i]);
+            }
+
+            // ═══════════════════════════════════════════════════════════════════════
+            // STATUS PILL - Scroll to notify form
+            // ═══════════════════════════════════════════════════════════════════════
+            var statusPill = document.getElementById('statusPill');
+            var notifySection = document.getElementById('notifySection');
+            var emailInput = document.getElementById('emailInput');
+
+            if (statusPill && notifySection && emailInput) {
+                statusPill.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    notifySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    setTimeout(function() {
+                        emailInput.focus();
+                    }, 600);
                 });
             }
 
-            setupExpandables('.service-card');
-            setupExpandables('.tech-item');
-
             // ═══════════════════════════════════════════════════════════════════════
-            // FORM SUBMISSION - Formspree
+            // FORM SUBMISSION - Formspree with fallback
             // ═══════════════════════════════════════════════════════════════════════
             var form = document.getElementById('notifyForm');
-            var emailInput = document.getElementById('emailInput');
             var btn = document.getElementById('notifyBtn');
             var successMsg = document.getElementById('successMsg');
             var errorMsg = document.getElementById('errorMsg');
 
-            if (form) {
+            if (form && btn && emailInput) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
 
@@ -1446,8 +1933,8 @@
                     // Loading state
                     form.classList.add('loading');
                     btn.disabled = true;
-                    successMsg.classList.remove('visible');
-                    errorMsg.classList.remove('visible');
+                    if (successMsg) successMsg.classList.remove('visible');
+                    if (errorMsg) errorMsg.classList.remove('visible');
 
                     // Submit to Formspree
                     fetch(form.action, {
@@ -1462,7 +1949,7 @@
                             btn.style.background = '#6EC5B8';
                             emailInput.value = '';
                             emailInput.disabled = true;
-                            successMsg.classList.add('visible');
+                            if (successMsg) successMsg.classList.add('visible');
                         } else {
                             throw new Error('Submission failed');
                         }
@@ -1470,10 +1957,7 @@
                     .catch(function() {
                         form.classList.remove('loading');
                         btn.disabled = false;
-                        errorMsg.classList.add('visible');
-                        setTimeout(function() {
-                            errorMsg.classList.remove('visible');
-                        }, 5000);
+                        if (errorMsg) errorMsg.classList.add('visible');
                     });
                 });
             }
