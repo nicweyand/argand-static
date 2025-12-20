@@ -56,11 +56,11 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           DESIGN TOKENS - Rengoku Fire Palette
+           DESIGN TOKENS - Rengoku Fire Palette (Refined)
            ═══════════════════════════════════════════════════════════════════════ */
         :root {
             /* Fire depths - warm blacks with orange undertones */
-            --bg-deep: #0f0805;
+            --bg-deep: #0d0704;
             --bg-fire-1: #1a0a05;
             --bg-fire-2: #2a1208;
             --bg-surface: #1c120b;
@@ -73,6 +73,7 @@
             --flame-ember: #E97451;
             --flame-deep: #B7410E;
             --flame-glow: rgba(255, 107, 53, 0.5);
+            --flame-subtle: rgba(255, 107, 53, 0.08);
             --terracotta: #C04000;
             --copper: #B87333;
 
@@ -101,9 +102,16 @@
             --space-xl: 2.5rem;
             --space-2xl: 4rem;
 
-            /* Animation */
+            /* Animation - refined timings */
             --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
             --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+            /* Shadows - refined depth */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.35);
+            --shadow-glow: 0 0 40px rgba(255, 107, 53, 0.15);
         }
 
         *, *::before, *::after {
@@ -139,6 +147,7 @@
         body.low-bandwidth .fire-glow-2,
         body.low-bandwidth .fire-glow-3,
         body.low-bandwidth .fire-glow-top,
+        body.low-bandwidth .noise-overlay,
         body.low-bandwidth #ember-canvas {
             display: none !important;
         }
@@ -151,7 +160,7 @@
         a {
             color: var(--flame-ember);
             text-decoration: none;
-            transition: color 0.2s var(--ease-out);
+            transition: color 0.25s var(--ease-smooth);
         }
 
         a:hover {
@@ -159,7 +168,22 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           FIRE BACKGROUND - Full Rengoku Theme (top and bottom)
+           NOISE TEXTURE OVERLAY - Adds depth and polish
+           ═══════════════════════════════════════════════════════════════════════ */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           FIRE BACKGROUND - Refined, subtler top glow
            ═══════════════════════════════════════════════════════════════════════ */
         .fire-background {
             position: fixed;
@@ -170,45 +194,45 @@
             z-index: 0;
             pointer-events: none;
             background:
-                /* Top fire glow */
-                radial-gradient(ellipse 100% 50% at 80% 0%, rgba(183, 65, 14, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse 80% 40% at 20% 0%, rgba(255, 107, 53, 0.15) 0%, transparent 45%),
-                /* Bottom fire glow */
-                radial-gradient(ellipse 120% 80% at 50% 100%, rgba(183, 65, 14, 0.3) 0%, transparent 55%),
-                radial-gradient(ellipse 100% 60% at 30% 100%, rgba(255, 107, 53, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse 80% 50% at 70% 100%, rgba(233, 116, 81, 0.22) 0%, transparent 45%),
+                /* Top fire glow - REDUCED intensity */
+                radial-gradient(ellipse 100% 40% at 75% 0%, rgba(183, 65, 14, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 70% 30% at 25% 0%, rgba(255, 107, 53, 0.06) 0%, transparent 45%),
+                /* Bottom fire glow - main source */
+                radial-gradient(ellipse 120% 80% at 50% 100%, rgba(183, 65, 14, 0.25) 0%, transparent 55%),
+                radial-gradient(ellipse 100% 60% at 30% 100%, rgba(255, 107, 53, 0.18) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 50% at 70% 100%, rgba(233, 116, 81, 0.2) 0%, transparent 45%),
                 /* Base gradient */
-                linear-gradient(to bottom, #1f0d06 0%, #0f0805 30%, #0f0805 70%, #1a0a05 100%);
+                linear-gradient(to bottom, #150a05 0%, #0d0704 25%, #0d0704 75%, #1a0a05 100%);
         }
 
-        /* Animated fire glow - TOP */
+        /* Animated fire glow - TOP (SUBTLE) */
         .fire-glow-top {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 50%;
+            height: 40%;
             background:
-                radial-gradient(ellipse 120% 80% at 70% 0%, rgba(255, 107, 53, 0.12) 0%, transparent 60%),
-                radial-gradient(ellipse 80% 60% at 30% 0%, rgba(233, 116, 81, 0.08) 0%, transparent 50%);
-            animation: fireGlowTop 5s ease-in-out infinite;
+                radial-gradient(ellipse 100% 60% at 65% 0%, rgba(255, 107, 53, 0.04) 0%, transparent 55%),
+                radial-gradient(ellipse 60% 40% at 35% 0%, rgba(233, 116, 81, 0.03) 0%, transparent 45%);
+            animation: fireGlowTop 7s ease-in-out infinite;
             pointer-events: none;
             z-index: 1;
         }
 
         @keyframes fireGlowTop {
-            0%, 100% { opacity: 0.7; transform: scaleX(1); }
-            50% { opacity: 1; transform: scaleX(1.05); }
+            0%, 100% { opacity: 0.6; transform: scaleX(1); }
+            50% { opacity: 0.9; transform: scaleX(1.02); }
         }
 
-        /* Animated fire glow layers - BOTTOM */
+        /* Animated fire glow layers - BOTTOM (main fire) */
         .fire-glow-1 {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 55%;
-            background: radial-gradient(ellipse 150% 100% at 50% 100%, rgba(255, 107, 53, 0.15) 0%, transparent 65%);
+            background: radial-gradient(ellipse 150% 100% at 50% 100%, rgba(255, 107, 53, 0.14) 0%, transparent 65%);
             animation: fireGlow1 4s ease-in-out infinite;
             pointer-events: none;
             z-index: 1;
@@ -220,7 +244,7 @@
             left: 0;
             width: 100%;
             height: 45%;
-            background: radial-gradient(ellipse 120% 80% at 40% 100%, rgba(233, 116, 81, 0.12) 0%, transparent 55%);
+            background: radial-gradient(ellipse 120% 80% at 40% 100%, rgba(233, 116, 81, 0.11) 0%, transparent 55%);
             animation: fireGlow2 5s ease-in-out infinite;
             pointer-events: none;
             z-index: 1;
@@ -232,25 +256,25 @@
             left: 0;
             width: 100%;
             height: 40%;
-            background: radial-gradient(ellipse 100% 70% at 60% 100%, rgba(255, 140, 66, 0.1) 0%, transparent 50%);
+            background: radial-gradient(ellipse 100% 70% at 60% 100%, rgba(255, 140, 66, 0.09) 0%, transparent 50%);
             animation: fireGlow3 6s ease-in-out infinite;
             pointer-events: none;
             z-index: 1;
         }
 
         @keyframes fireGlow1 {
-            0%, 100% { opacity: 0.8; transform: scaleY(1); }
-            50% { opacity: 1; transform: scaleY(1.08); }
+            0%, 100% { opacity: 0.75; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.06); }
         }
 
         @keyframes fireGlow2 {
-            0%, 100% { opacity: 0.7; transform: translateX(0) scaleY(1); }
-            50% { opacity: 1; transform: translateX(2%) scaleY(1.12); }
+            0%, 100% { opacity: 0.65; transform: translateX(0) scaleY(1); }
+            50% { opacity: 0.95; transform: translateX(1.5%) scaleY(1.08); }
         }
 
         @keyframes fireGlow3 {
-            0%, 100% { opacity: 0.6; transform: translateX(0) scaleY(1); }
-            50% { opacity: 0.9; transform: translateX(-2%) scaleY(1.15); }
+            0%, 100% { opacity: 0.55; transform: translateX(0) scaleY(1); }
+            50% { opacity: 0.85; transform: translateX(-1.5%) scaleY(1.1); }
         }
 
         /* Ember Particle Canvas */
@@ -265,33 +289,33 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           ARGAND DIAGRAM - More Prominent
+           ARGAND DIAGRAM - Polished with interactive trigger
            ═══════════════════════════════════════════════════════════════════════ */
         .argand-container {
             position: fixed;
             right: 3%;
             top: 50%;
             transform: translateY(-50%);
-            width: min(480px, 38vw);
-            height: min(480px, 38vw);
+            width: min(460px, 36vw);
+            height: min(460px, 36vw);
             z-index: 3;
             pointer-events: none;
         }
 
         @media (max-width: 1400px) {
             .argand-container {
-                width: min(400px, 32vw);
-                height: min(400px, 32vw);
+                width: min(380px, 30vw);
+                height: min(380px, 30vw);
                 right: 2%;
             }
         }
 
         @media (max-width: 1100px) {
             .argand-container {
-                opacity: 0.5;
+                opacity: 0.45;
                 right: 0;
-                width: min(350px, 30vw);
-                height: min(350px, 30vw);
+                width: min(320px, 28vw);
+                height: min(320px, 28vw);
             }
         }
 
@@ -299,113 +323,36 @@
             .argand-container {
                 display: none;
             }
-            .argand-explainer {
-                display: none;
+            .argand-info-trigger,
+            .argand-tooltip {
+                display: none !important;
             }
-        }
-
-        /* "What's an Argand?" explainer */
-        .argand-explainer {
-            position: fixed;
-            right: calc(3% + min(480px, 38vw) + 20px);
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 4;
-            max-width: 220px;
-            opacity: 0;
-            animation: fadeUp 1s var(--ease-out) 1.5s forwards;
-        }
-
-        @media (max-width: 1400px) {
-            .argand-explainer {
-                right: calc(2% + min(400px, 32vw) + 15px);
-                max-width: 180px;
-            }
-        }
-
-        @media (max-width: 1100px) {
-            .argand-explainer {
-                display: none;
-            }
-        }
-
-        .argand-explainer-content {
-            background: rgba(28, 18, 11, 0.92);
-            border: 1px solid rgba(255, 107, 53, 0.35);
-            border-radius: 12px;
-            padding: var(--space-md);
-            backdrop-filter: blur(8px);
-            position: relative;
-        }
-
-        .argand-explainer-content::after {
-            content: '';
-            position: absolute;
-            right: -12px;
-            top: 50%;
-            transform: translateY(-50%);
-            border: 8px solid transparent;
-            border-left-color: rgba(255, 107, 53, 0.35);
-        }
-
-        .argand-explainer-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--flame-ember);
-            margin-bottom: var(--space-xs);
-            display: flex;
-            align-items: center;
-            gap: var(--space-xs);
-        }
-
-        .argand-explainer-title::before {
-            content: '?';
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 20px;
-            height: 20px;
-            background: var(--flame-ember);
-            color: var(--bg-deep);
-            border-radius: 50%;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        .argand-explainer-text {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.55;
-        }
-
-        .argand-explainer-text strong {
-            color: var(--text-primary);
         }
 
         .argand-diagram {
             width: 100%;
             height: 100%;
             opacity: 0;
-            animation: diagramFadeIn 2s var(--ease-out) 0.5s forwards;
+            animation: diagramFadeIn 2.5s var(--ease-out) 0.8s forwards;
         }
 
         @keyframes diagramFadeIn {
-            from { opacity: 0; transform: scale(0.85) rotate(-5deg); }
-            to { opacity: 0.55; transform: scale(1) rotate(0deg); }
+            from { opacity: 0; transform: scale(0.88) rotate(-3deg); }
+            to { opacity: 0.5; transform: scale(1) rotate(0deg); }
         }
 
         /* Gentle floating animation */
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-10px) rotate(0.5deg); }
-            75% { transform: translateY(6px) rotate(-0.5deg); }
+            25% { transform: translateY(-8px) rotate(0.3deg); }
+            75% { transform: translateY(5px) rotate(-0.3deg); }
         }
 
         .argand-diagram svg {
             width: 100%;
             height: 100%;
-            animation: float 15s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(255, 107, 53, 0.2));
+            animation: float 18s ease-in-out infinite;
+            filter: drop-shadow(0 0 25px rgba(255, 107, 53, 0.15));
         }
 
         /* Rotating unit circle */
@@ -416,18 +363,161 @@
 
         .unit-circle-group {
             transform-origin: 200px 200px;
-            animation: rotateCircle 50s linear infinite;
+            animation: rotateCircle 60s linear infinite;
         }
 
         /* Orbiting complex point */
-        @keyframes orbitPoint {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
         .orbit-group {
             transform-origin: 200px 200px;
-            animation: orbitPoint 6s linear infinite;
+            animation: rotateCircle 8s linear infinite;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           "What's an Argand?" - ON-DEMAND TOOLTIP with SVG pointer
+           ═══════════════════════════════════════════════════════════════════════ */
+        .argand-info-trigger {
+            position: fixed;
+            right: calc(3% + min(460px, 36vw) - 35px);
+            top: calc(50% - min(230px, 18vw) - 45px);
+            z-index: 50;
+            width: 36px;
+            height: 36px;
+            background: rgba(28, 18, 11, 0.95);
+            border: 1px solid rgba(255, 107, 53, 0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--flame-ember);
+            transition: all 0.3s var(--ease-out);
+            backdrop-filter: blur(8px);
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            animation: fadeUp 0.6s var(--ease-out) 2s forwards;
+            pointer-events: auto;
+        }
+
+        .argand-info-trigger:hover {
+            background: var(--flame-ember);
+            color: var(--bg-deep);
+            border-color: var(--flame-ember);
+            transform: scale(1.1);
+            box-shadow: var(--shadow-glow), var(--shadow-md);
+        }
+
+        .argand-info-trigger.active {
+            background: var(--flame-ember);
+            color: var(--bg-deep);
+            border-color: var(--flame-ember);
+        }
+
+        @media (max-width: 1400px) {
+            .argand-info-trigger {
+                right: calc(2% + min(380px, 30vw) - 30px);
+                top: calc(50% - min(190px, 15vw) - 40px);
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .argand-info-trigger {
+                display: none;
+            }
+        }
+
+        /* Tooltip that appears on click */
+        .argand-tooltip {
+            position: fixed;
+            right: calc(3% + min(460px, 36vw) + 25px);
+            top: calc(50% - min(230px, 18vw) - 60px);
+            z-index: 49;
+            width: 280px;
+            background: rgba(28, 18, 11, 0.97);
+            border: 1px solid rgba(255, 107, 53, 0.45);
+            border-radius: 14px;
+            padding: var(--space-lg);
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(15px) scale(0.95);
+            transition: all 0.35s var(--ease-out);
+            pointer-events: none;
+        }
+
+        .argand-tooltip.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0) scale(1);
+            pointer-events: auto;
+        }
+
+        @media (max-width: 1400px) {
+            .argand-tooltip {
+                right: calc(2% + min(380px, 30vw) + 20px);
+                top: calc(50% - min(190px, 15vw) - 55px);
+                width: 250px;
+            }
+        }
+
+        /* SVG Arrow pointing to diagram */
+        .argand-tooltip-arrow {
+            position: absolute;
+            right: -60px;
+            top: 30px;
+            width: 60px;
+            height: 40px;
+            overflow: visible;
+        }
+
+        .argand-tooltip-arrow svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .argand-tooltip-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--flame-ember);
+            margin-bottom: var(--space-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .argand-tooltip-text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .argand-tooltip-text strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .argand-tooltip-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s var(--ease-out);
+        }
+
+        .argand-tooltip-close:hover {
+            background: rgba(255, 107, 53, 0.15);
+            color: var(--flame-ember);
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
@@ -442,7 +532,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           HEADER
+           HEADER - Polished
            ═══════════════════════════════════════════════════════════════════════ */
         header {
             padding: var(--space-lg) var(--space-xl);
@@ -450,7 +540,7 @@
             justify-content: space-between;
             align-items: center;
             opacity: 0;
-            animation: fadeDown 0.6s var(--ease-out) 0.1s forwards;
+            animation: fadeDown 0.7s var(--ease-out) 0.1s forwards;
         }
 
         @keyframes fadeDown {
@@ -459,40 +549,64 @@
         }
 
         .logo {
-            font-size: 1.85rem;
+            font-size: 1.9rem;
             font-weight: 700;
             color: var(--flame-ember);
             letter-spacing: -0.03em;
-            transition: all 0.3s var(--ease-out);
-            text-shadow: 0 0 30px rgba(233, 116, 81, 0.4);
+            transition: all 0.4s var(--ease-out);
+            text-shadow: 0 0 25px rgba(233, 116, 81, 0.35);
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--flame-ember), var(--flame-bright));
+            transition: width 0.4s var(--ease-out);
+            border-radius: 1px;
         }
 
         .logo:hover {
             color: var(--text-primary);
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .logo:hover::after {
+            width: 100%;
         }
 
         .status-pill {
             display: flex;
             align-items: center;
             gap: var(--space-sm);
-            padding: var(--space-sm) var(--space-md);
-            background: var(--bg-elevated);
-            border: 1px solid rgba(255, 107, 53, 0.3);
+            padding: 10px 18px;
+            background: rgba(42, 26, 16, 0.85);
+            border: 1px solid rgba(255, 107, 53, 0.35);
             border-radius: 100px;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 600;
             color: var(--flame-ember);
-            letter-spacing: 0.03em;
+            letter-spacing: 0.02em;
             cursor: pointer;
-            transition: all 0.3s var(--ease-out);
+            transition: all 0.35s var(--ease-out);
+            backdrop-filter: blur(8px);
+            box-shadow: var(--shadow-sm);
         }
 
         .status-pill:hover {
             background: var(--bg-hover);
             border-color: var(--flame-ember);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.2);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md), var(--shadow-glow);
+        }
+
+        .status-pill:active {
+            transform: translateY(-1px);
         }
 
         .status-dot {
@@ -500,17 +614,17 @@
             height: 8px;
             background: var(--flame-core);
             border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
+            animation: pulse 2.5s ease-in-out infinite;
             box-shadow: 0 0 12px var(--flame-glow);
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.3); }
+            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 12px var(--flame-glow); }
+            50% { opacity: 0.7; transform: scale(1.25); box-shadow: 0 0 20px var(--flame-glow); }
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           HERO SECTION
+           HERO SECTION - Polished typography
            ═══════════════════════════════════════════════════════════════════════ */
         .hero {
             flex: 1;
@@ -528,45 +642,46 @@
         }
 
         .hero-intro {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.18em;
             color: var(--flame-core);
             margin-bottom: var(--space-md);
             opacity: 0;
-            animation: fadeUp 0.5s var(--ease-out) 0.2s forwards;
-            text-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+            animation: fadeUp 0.6s var(--ease-out) 0.25s forwards;
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
         }
 
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+            font-size: clamp(2.2rem, 5.5vw, 3.7rem);
             font-weight: 700;
-            line-height: 1.12;
+            line-height: 1.1;
             color: var(--text-primary);
             margin-bottom: var(--space-lg);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.025em;
             opacity: 0;
-            animation: fadeUp 0.6s var(--ease-out) 0.3s forwards;
+            animation: fadeUp 0.7s var(--ease-out) 0.35s forwards;
         }
 
         h1 .highlight {
             color: var(--flame-core);
-            text-shadow: 0 0 50px var(--flame-glow);
+            text-shadow: 0 0 45px var(--flame-glow);
+            position: relative;
         }
 
         .hero-description {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: var(--text-secondary);
-            max-width: 580px;
+            max-width: 560px;
             margin-bottom: var(--space-xl);
             opacity: 0;
-            animation: fadeUp 0.6s var(--ease-out) 0.4s forwards;
+            animation: fadeUp 0.7s var(--ease-out) 0.45s forwards;
         }
 
         .hero-description strong {
@@ -575,17 +690,17 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           SERVICE CARDS - Fixed accordion (only one opens)
+           SERVICE CARDS - Refined with better hover states
            ═══════════════════════════════════════════════════════════════════════ */
         .services {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            align-items: start; /* CRITICAL: Prevents row stretching when one card expands */
+            align-items: start;
             gap: var(--space-md);
             max-width: 680px;
             margin-bottom: var(--space-2xl);
             opacity: 0;
-            animation: fadeUp 0.6s var(--ease-out) 0.5s forwards;
+            animation: fadeUp 0.7s var(--ease-out) 0.55s forwards;
         }
 
         @media (max-width: 600px) {
@@ -595,23 +710,24 @@
         }
 
         .service-card {
-            background: rgba(28, 18, 11, 0.85);
-            border: 1px solid rgba(255, 107, 53, 0.18);
-            border-radius: 16px;
+            background: rgba(28, 18, 11, 0.88);
+            border: 1px solid rgba(255, 107, 53, 0.16);
+            border-radius: 18px;
             overflow: hidden;
             transition: all 0.4s var(--ease-out);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
         }
 
         .service-card:hover {
-            border-color: rgba(255, 107, 53, 0.45);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 35px rgba(255, 107, 53, 0.12);
-            transform: translateY(-4px);
+            border-color: rgba(255, 107, 53, 0.4);
+            box-shadow: var(--shadow-lg), 0 0 45px rgba(255, 107, 53, 0.08);
+            transform: translateY(-5px);
         }
 
         .service-card.expanded {
             border-color: var(--flame-ember);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 50px rgba(255, 107, 53, 0.18);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
 
         .service-header {
@@ -625,27 +741,31 @@
         }
 
         .service-card:hover .service-header {
-            background: rgba(42, 26, 16, 0.5);
+            background: rgba(42, 26, 16, 0.45);
         }
 
         .service-icon {
-            width: 46px;
-            height: 46px;
+            width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 107, 53, 0.15);
-            border-radius: 12px;
+            background: rgba(255, 107, 53, 0.12);
+            border-radius: 14px;
             color: var(--flame-ember);
             flex-shrink: 0;
-            transition: all 0.3s var(--ease-out);
+            transition: all 0.35s var(--ease-out);
         }
 
-        .service-card:hover .service-icon,
+        .service-card:hover .service-icon {
+            background: rgba(255, 107, 53, 0.2);
+            transform: scale(1.05);
+        }
+
         .service-card.expanded .service-icon {
             background: var(--flame-ember);
             color: var(--bg-deep);
-            transform: scale(1.05);
+            transform: scale(1.08);
             box-shadow: 0 0 25px var(--flame-glow);
         }
 
@@ -655,10 +775,15 @@
         }
 
         .service-title {
-            font-size: 1.15rem;
+            font-size: 1.12rem;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 2px;
+            margin-bottom: 3px;
+            transition: color 0.25s var(--ease-out);
+        }
+
+        .service-card:hover .service-title {
+            color: var(--flame-bright);
         }
 
         .service-tagline {
@@ -667,11 +792,15 @@
         }
 
         .expand-indicator {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             color: var(--text-muted);
-            transition: all 0.3s var(--ease-out);
+            transition: all 0.35s var(--ease-out);
             flex-shrink: 0;
+        }
+
+        .service-card:hover .expand-indicator {
+            color: var(--flame-ember);
         }
 
         .service-card.expanded .expand-indicator {
@@ -694,7 +823,7 @@
         }
 
         .service-description {
-            font-size: 0.95rem;
+            font-size: 0.94rem;
             color: var(--text-secondary);
             line-height: 1.7;
             margin-bottom: var(--space-md);
@@ -707,35 +836,37 @@
         }
 
         .feature-tag {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
-            padding: 6px 12px;
-            background: rgba(255, 107, 53, 0.12);
-            border: 1px solid rgba(255, 107, 53, 0.28);
+            padding: 7px 13px;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.25);
             border-radius: 8px;
             color: var(--flame-ember);
             cursor: pointer;
-            transition: all 0.2s var(--ease-out);
+            transition: all 0.25s var(--ease-out);
             user-select: none;
         }
 
         .feature-tag:hover {
-            background: rgba(255, 107, 53, 0.22);
+            background: rgba(255, 107, 53, 0.2);
             border-color: var(--flame-ember);
+            transform: translateY(-2px);
         }
 
         .feature-tag.active {
             background: var(--flame-ember);
             color: var(--bg-deep);
             border-color: var(--flame-ember);
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.25);
         }
 
         .feature-definition {
             display: none;
             margin-top: var(--space-md);
             padding: var(--space-md);
-            background: rgba(42, 26, 16, 0.65);
-            border-radius: 10px;
+            background: rgba(42, 26, 16, 0.6);
+            border-radius: 12px;
             border-left: 3px solid var(--flame-ember);
         }
 
@@ -745,45 +876,52 @@
         }
 
         .feature-definition-title {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 700;
             color: var(--flame-ember);
             margin-bottom: var(--space-xs);
         }
 
         .feature-definition-text {
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             color: var(--text-secondary);
             line-height: 1.6;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           PHILOSOPHY SECTION
+           PHILOSOPHY SECTION - Refined
            ═══════════════════════════════════════════════════════════════════════ */
         .philosophy {
             margin-bottom: var(--space-2xl);
             opacity: 0;
-            animation: fadeUp 0.6s var(--ease-out) 0.6s forwards;
+            animation: fadeUp 0.7s var(--ease-out) 0.65s forwards;
         }
 
         .philosophy-card {
             padding: var(--space-xl);
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.12) 0%, rgba(183, 65, 14, 0.06) 100%);
-            border: 1px solid rgba(255, 107, 53, 0.28);
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(183, 65, 14, 0.05) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.25);
             border-radius: 20px;
             max-width: 680px;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s var(--ease-out);
+        }
+
+        .philosophy-card:hover {
+            border-color: rgba(255, 107, 53, 0.4);
+            box-shadow: var(--shadow-lg), 0 0 35px rgba(255, 107, 53, 0.06);
         }
 
         .philosophy-headline {
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: var(--space-md);
         }
 
         .philosophy-text {
-            font-size: 1.02rem;
+            font-size: 1rem;
             color: var(--text-secondary);
             line-height: 1.7;
             margin-bottom: var(--space-lg);
@@ -791,7 +929,7 @@
 
         .philosophy-points {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
             gap: var(--space-md);
         }
 
@@ -799,6 +937,11 @@
             display: flex;
             align-items: flex-start;
             gap: var(--space-sm);
+            transition: transform 0.25s var(--ease-out);
+        }
+
+        .philosophy-point:hover {
+            transform: translateX(4px);
         }
 
         .philosophy-point svg {
@@ -810,56 +953,57 @@
         }
 
         .philosophy-point span {
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             color: var(--text-primary);
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           TECH SECTION - Under the Hood
+           TECH SECTION - Polished
            ═══════════════════════════════════════════════════════════════════════ */
         .tech-section {
             margin-bottom: var(--space-2xl);
             opacity: 0;
-            animation: fadeUp 0.6s var(--ease-out) 0.7s forwards;
+            animation: fadeUp 0.7s var(--ease-out) 0.75s forwards;
         }
 
         .tech-label {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             color: var(--text-muted);
             margin-bottom: var(--space-md);
         }
 
         .tech-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            align-items: start; /* Prevents row stretching */
+            grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+            align-items: start;
             gap: var(--space-sm);
             max-width: 760px;
         }
 
         .tech-item {
             padding: var(--space-md);
-            background: rgba(28, 18, 11, 0.75);
-            border: 1px solid rgba(255, 107, 53, 0.14);
-            border-radius: 12px;
+            background: rgba(28, 18, 11, 0.78);
+            border: 1px solid rgba(255, 107, 53, 0.12);
+            border-radius: 14px;
             cursor: pointer;
-            transition: all 0.3s var(--ease-out);
-            backdrop-filter: blur(4px);
+            transition: all 0.35s var(--ease-out);
+            backdrop-filter: blur(6px);
             user-select: none;
         }
 
         .tech-item:hover {
-            border-color: rgba(255, 107, 53, 0.38);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 107, 53, 0.35);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
         }
 
         .tech-item.expanded {
             border-color: var(--flame-ember);
-            background: rgba(42, 26, 16, 0.85);
+            background: rgba(42, 26, 16, 0.88);
+            box-shadow: var(--shadow-md), 0 0 20px rgba(255, 107, 53, 0.08);
         }
 
         .tech-item-header {
@@ -870,39 +1014,49 @@
         }
 
         .tech-item-title {
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: var(--text-primary);
+            transition: color 0.25s var(--ease-out);
+        }
+
+        .tech-item:hover .tech-item-title {
+            color: var(--flame-bright);
         }
 
         .tech-item-icon {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             flex-shrink: 0;
+            transition: transform 0.3s var(--ease-bounce);
+        }
+
+        .tech-item:hover .tech-item-icon {
+            transform: scale(1.15);
         }
 
         .tech-item-desc {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.35s var(--ease-out), margin-top 0.35s var(--ease-out);
+            transition: max-height 0.4s var(--ease-out), margin-top 0.4s var(--ease-out);
         }
 
         .tech-item.expanded .tech-item-desc {
-            max-height: 200px;
+            max-height: 180px;
             margin-top: var(--space-sm);
         }
 
         .tech-item-desc p {
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             color: var(--text-secondary);
             line-height: 1.6;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           NOTIFY FORM
+           NOTIFY FORM - Premium feel
            ═══════════════════════════════════════════════════════════════════════ */
         .notify-section {
             opacity: 0;
-            animation: fadeUp 0.6s var(--ease-out) 0.8s forwards;
+            animation: fadeUp 0.7s var(--ease-out) 0.85s forwards;
             margin-bottom: var(--space-2xl);
         }
 
@@ -928,14 +1082,15 @@
 
         .notify-input {
             flex: 1;
-            padding: var(--space-md) var(--space-lg);
-            background: rgba(28, 18, 11, 0.92);
-            border: 2px solid rgba(255, 107, 53, 0.22);
-            border-radius: 12px;
+            padding: 14px 20px;
+            background: rgba(28, 18, 11, 0.95);
+            border: 2px solid rgba(255, 107, 53, 0.2);
+            border-radius: 14px;
             color: var(--text-primary);
             font-family: inherit;
             font-size: 1rem;
-            transition: all 0.3s var(--ease-out);
+            transition: all 0.35s var(--ease-out);
+            box-shadow: var(--shadow-sm);
         }
 
         .notify-input::placeholder {
@@ -945,32 +1100,49 @@
         .notify-input:focus {
             outline: none;
             border-color: var(--flame-ember);
-            background: rgba(42, 26, 16, 0.95);
-            box-shadow: 0 0 0 4px var(--flame-glow), 0 0 35px rgba(255, 107, 53, 0.18);
+            background: rgba(42, 26, 16, 0.98);
+            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.15), var(--shadow-glow);
         }
 
         .notify-btn {
-            padding: var(--space-md) var(--space-xl);
-            background: var(--flame-ember);
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--flame-ember) 0%, var(--flame-deep) 100%);
             color: #fff;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-family: inherit;
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s var(--ease-out);
+            transition: all 0.35s var(--ease-out);
             white-space: nowrap;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notify-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.5s var(--ease-out);
         }
 
         .notify-btn:hover {
-            background: var(--flame-core);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 32px var(--flame-glow);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md), var(--shadow-glow);
+        }
+
+        .notify-btn:hover::before {
+            left: 100%;
         }
 
         .notify-btn:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
         }
 
         .notify-btn:disabled {
@@ -982,7 +1154,7 @@
         .notify-message {
             display: none;
             margin-top: var(--space-md);
-            padding: var(--space-md) var(--space-lg);
+            padding: 14px 18px;
             border-radius: 12px;
             font-weight: 600;
             align-items: center;
@@ -990,20 +1162,20 @@
         }
 
         .notify-message.success {
-            background: rgba(110, 197, 184, 0.18);
-            border: 1px solid rgba(110, 197, 184, 0.45);
+            background: rgba(110, 197, 184, 0.15);
+            border: 1px solid rgba(110, 197, 184, 0.4);
             color: var(--teal);
         }
 
         .notify-message.error {
-            background: rgba(255, 123, 123, 0.18);
-            border: 1px solid rgba(255, 123, 123, 0.45);
+            background: rgba(255, 123, 123, 0.15);
+            border: 1px solid rgba(255, 123, 123, 0.4);
             color: var(--error);
         }
 
         .notify-message.visible {
             display: flex;
-            animation: fadeUp 0.3s var(--ease-out);
+            animation: fadeUp 0.35s var(--ease-out);
         }
 
         .notify-fallback {
@@ -1014,6 +1186,11 @@
 
         .notify-fallback a {
             color: var(--flame-ember);
+            transition: color 0.2s var(--ease-out);
+        }
+
+        .notify-fallback a:hover {
+            color: var(--flame-bright);
         }
 
         /* Loading state */
@@ -1025,15 +1202,15 @@
         .loading .notify-btn::after {
             content: '';
             position: absolute;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             top: 50%;
             left: 50%;
-            margin: -9px 0 0 -9px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
             border-radius: 50%;
             border-top-color: #fff;
-            animation: spin 0.6s linear infinite;
+            animation: spin 0.7s linear infinite;
         }
 
         @keyframes spin {
@@ -1041,18 +1218,25 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           ABOUT SECTION
+           ABOUT SECTION - Polished
            ═══════════════════════════════════════════════════════════════════════ */
         .about-section {
             padding: var(--space-lg);
-            background: rgba(28, 18, 11, 0.75);
-            border: 1px solid rgba(255, 107, 53, 0.18);
-            border-radius: 16px;
+            background: rgba(28, 18, 11, 0.78);
+            border: 1px solid rgba(255, 107, 53, 0.16);
+            border-radius: 18px;
             max-width: 620px;
             margin-bottom: var(--space-2xl);
             opacity: 0;
-            animation: fadeUp 0.6s var(--ease-out) 0.9s forwards;
-            backdrop-filter: blur(8px);
+            animation: fadeUp 0.7s var(--ease-out) 0.95s forwards;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s var(--ease-out);
+        }
+
+        .about-section:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+            box-shadow: var(--shadow-md);
         }
 
         .about-content {
@@ -1068,10 +1252,10 @@
         }
 
         .about-avatar {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, var(--flame-ember), var(--flame-deep));
-            border-radius: 14px;
+            width: 58px;
+            height: 58px;
+            background: linear-gradient(135deg, var(--flame-ember) 0%, var(--flame-deep) 100%);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1079,7 +1263,12 @@
             font-weight: 700;
             color: #fff;
             flex-shrink: 0;
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.35);
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+            transition: transform 0.35s var(--ease-bounce);
+        }
+
+        .about-section:hover .about-avatar {
+            transform: scale(1.05) rotate(-2deg);
         }
 
         .about-text h3 {
@@ -1108,25 +1297,26 @@
             font-size: 0.88rem;
             font-weight: 600;
             color: var(--flame-ember);
-            transition: color 0.2s;
+            transition: all 0.25s var(--ease-out);
         }
 
         .about-link:hover {
             color: var(--flame-bright);
+            transform: translateX(3px);
         }
 
         .about-link svg {
-            width: 16px;
-            height: 16px;
+            width: 17px;
+            height: 17px;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           FOOTER
+           FOOTER - Refined
            ═══════════════════════════════════════════════════════════════════════ */
         footer {
             padding: var(--space-xl);
             opacity: 0;
-            animation: fadeUp 0.6s var(--ease-out) 1s forwards;
+            animation: fadeUp 0.7s var(--ease-out) 1.05s forwards;
         }
 
         .footer-content {
@@ -1150,11 +1340,27 @@
         .footer-link {
             font-size: 0.88rem;
             color: var(--text-muted);
-            transition: color 0.2s;
+            transition: all 0.25s var(--ease-out);
+            position: relative;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--flame-ember);
+            transition: width 0.3s var(--ease-out);
         }
 
         .footer-link:hover {
             color: var(--flame-ember);
+        }
+
+        .footer-link:hover::after {
+            width: 100%;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
@@ -1162,7 +1368,7 @@
            ═══════════════════════════════════════════════════════════════════════ */
         *:focus-visible {
             outline: 2px solid var(--flame-ember);
-            outline-offset: 2px;
+            outline-offset: 3px;
         }
 
         /* Skip to content link */
@@ -1174,10 +1380,10 @@
             padding: var(--space-sm) var(--space-md);
             background: var(--flame-ember);
             color: #fff;
-            border-radius: 0 0 8px 8px;
+            border-radius: 0 0 10px 10px;
             font-weight: 600;
             z-index: 1000;
-            transition: top 0.3s;
+            transition: top 0.3s var(--ease-out);
         }
 
         .skip-link:focus {
@@ -1195,7 +1401,8 @@
             .fire-glow-1,
             .fire-glow-2,
             .fire-glow-3,
-            .fire-glow-top {
+            .fire-glow-top,
+            .noise-overlay {
                 display: none !important;
             }
         }
@@ -1207,8 +1414,11 @@
             .fire-glow-2,
             .fire-glow-3,
             .fire-glow-top,
+            .noise-overlay,
             #ember-canvas,
             .argand-container,
+            .argand-info-trigger,
+            .argand-tooltip,
             .status-pill {
                 display: none !important;
             }
@@ -1222,13 +1432,13 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════════════
-           NOSCRIPT / TEXT-ONLY STYLES (for Lynx, etc.)
+           NOSCRIPT / TEXT-ONLY STYLES
            ═══════════════════════════════════════════════════════════════════════ */
         noscript .text-only-notice {
             padding: var(--space-md);
-            background: rgba(255, 107, 53, 0.1);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            border-radius: 8px;
+            background: rgba(255, 107, 53, 0.08);
+            border: 1px solid rgba(255, 107, 53, 0.25);
+            border-radius: 10px;
             margin-bottom: var(--space-lg);
         }
     </style>
@@ -1236,6 +1446,9 @@
 <body>
     <!-- Skip to content for accessibility -->
     <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- Noise texture overlay for depth -->
+    <div class="noise-overlay" aria-hidden="true"></div>
 
     <!-- Fire Background Layers -->
     <div class="fire-background" aria-hidden="true"></div>
@@ -1247,28 +1460,44 @@
     <!-- Ember Particle Canvas -->
     <canvas id="ember-canvas" aria-hidden="true"></canvas>
 
-    <!-- "What's an Argand?" Explainer -->
-    <div class="argand-explainer" aria-hidden="true">
-        <div class="argand-explainer-content">
-            <div class="argand-explainer-title">What's an Argand?</div>
-            <p class="argand-explainer-text">
-                It's a way to visualize <strong>complex numbers</strong> on a 2D plane.
-                The horizontal axis is "real" numbers, the vertical is "imaginary."
-                That glowing dot? It represents a point in this space, orbiting the origin.
-                We named our search engine after it because we navigate the <strong>complex space of information</strong> to find exactly what you need.
-            </p>
+    <!-- "What's an Argand?" Trigger Button -->
+    <button class="argand-info-trigger" id="argandTrigger" type="button" aria-label="What is an Argand diagram?" aria-expanded="false" aria-controls="argandTooltip">
+        ?
+    </button>
+
+    <!-- Tooltip with SVG Arrow pointing to diagram -->
+    <div class="argand-tooltip" id="argandTooltip" role="tooltip">
+        <button class="argand-tooltip-close" id="argandClose" type="button" aria-label="Close tooltip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+        <div class="argand-tooltip-arrow">
+            <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Curved arrow pointing right to the diagram -->
+                <path d="M5 25 Q40 25 55 15" stroke="rgba(233, 116, 81, 0.7)" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <path d="M50 10 L58 16 L52 22" stroke="rgba(233, 116, 81, 0.7)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
         </div>
+        <div class="argand-tooltip-title">What's an Argand?</div>
+        <p class="argand-tooltip-text">
+            It's a way to visualize <strong>complex numbers</strong> on a 2D plane.
+            The horizontal axis is "real," the vertical is "imaginary."
+            That glowing dot orbits the origin.
+            We named our search engine after it because we navigate the <strong>complex space of information</strong> to find exactly what you need.
+        </p>
     </div>
 
-    <!-- Argand Diagram - More Prominent -->
+    <!-- Argand Diagram -->
     <div class="argand-container" aria-hidden="true">
         <div class="argand-diagram">
             <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
                 <!-- Outer glow ring -->
-                <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(255, 107, 53, 0.08)" stroke-width="40"/>
+                <circle cx="200" cy="200" r="145" fill="none" stroke="rgba(255, 107, 53, 0.06)" stroke-width="35"/>
 
                 <!-- Subtle grid -->
-                <g stroke="rgba(255, 107, 53, 0.1)" stroke-width="1">
+                <g stroke="rgba(255, 107, 53, 0.08)" stroke-width="1">
                     <line x1="100" y1="40" x2="100" y2="360"/>
                     <line x1="200" y1="40" x2="200" y2="360"/>
                     <line x1="300" y1="40" x2="300" y2="360"/>
@@ -1278,50 +1507,50 @@
                 </g>
 
                 <!-- Axes -->
-                <g stroke="rgba(255, 107, 53, 0.45)" stroke-width="2.5">
+                <g stroke="rgba(255, 107, 53, 0.4)" stroke-width="2.5">
                     <line x1="20" y1="200" x2="380" y2="200"/>
                     <line x1="200" y1="20" x2="200" y2="380"/>
                 </g>
 
                 <!-- Arrows -->
-                <g fill="rgba(255, 107, 53, 0.45)">
+                <g fill="rgba(255, 107, 53, 0.4)">
                     <polygon points="380,200 365,192 365,208"/>
                     <polygon points="200,20 192,35 208,35"/>
                 </g>
 
                 <!-- Unit circle (rotating) -->
                 <g class="unit-circle-group">
-                    <circle cx="200" cy="200" r="80" fill="none" stroke="rgba(255, 107, 53, 0.28)" stroke-width="2" stroke-dasharray="8 5"/>
+                    <circle cx="200" cy="200" r="80" fill="none" stroke="rgba(255, 107, 53, 0.22)" stroke-width="2" stroke-dasharray="8 5"/>
                 </g>
 
                 <!-- Labels -->
-                <g font-family="'Atkinson Hyperlegible', sans-serif" font-size="15" fill="rgba(255, 107, 53, 0.55)" font-weight="700">
+                <g font-family="'Atkinson Hyperlegible', sans-serif" font-size="14" fill="rgba(255, 107, 53, 0.5)" font-weight="700">
                     <text x="358" y="190">Re</text>
                     <text x="210" y="38">Im</text>
-                    <text x="278" y="220" font-size="13" font-weight="400">1</text>
-                    <text x="108" y="220" font-size="13" font-weight="400">-1</text>
-                    <text x="212" y="124" font-size="13" font-weight="400">i</text>
-                    <text x="208" y="294" font-size="13" font-weight="400">-i</text>
+                    <text x="278" y="218" font-size="12" font-weight="400">1</text>
+                    <text x="110" y="218" font-size="12" font-weight="400">-1</text>
+                    <text x="210" y="126" font-size="12" font-weight="400">i</text>
+                    <text x="206" y="290" font-size="12" font-weight="400">-i</text>
                 </g>
 
                 <!-- Origin with glow -->
-                <circle cx="200" cy="200" r="5" fill="rgba(255, 107, 53, 0.6)"/>
-                <circle cx="200" cy="200" r="10" fill="none" stroke="rgba(255, 107, 53, 0.2)" stroke-width="2"/>
+                <circle cx="200" cy="200" r="5" fill="rgba(255, 107, 53, 0.55)"/>
+                <circle cx="200" cy="200" r="10" fill="none" stroke="rgba(255, 107, 53, 0.18)" stroke-width="2"/>
 
                 <!-- Orbiting point on unit circle -->
                 <g class="orbit-group">
                     <circle cx="280" cy="200" r="7" fill="#6EC5B8">
-                        <animate attributeName="r" values="7;10;7" dur="2s" repeatCount="indefinite"/>
+                        <animate attributeName="r" values="7;9;7" dur="2.5s" repeatCount="indefinite"/>
                     </circle>
                     <!-- Outer glow -->
-                    <circle cx="280" cy="200" r="15" fill="none" stroke="rgba(110, 197, 184, 0.4)" stroke-width="3">
-                        <animate attributeName="r" values="15;22;15" dur="2s" repeatCount="indefinite"/>
-                        <animate attributeName="stroke-opacity" values="0.4;0.15;0.4" dur="2s" repeatCount="indefinite"/>
+                    <circle cx="280" cy="200" r="14" fill="none" stroke="rgba(110, 197, 184, 0.35)" stroke-width="2.5">
+                        <animate attributeName="r" values="14;20;14" dur="2.5s" repeatCount="indefinite"/>
+                        <animate attributeName="stroke-opacity" values="0.35;0.12;0.35" dur="2.5s" repeatCount="indefinite"/>
                     </circle>
                     <!-- Trail effect -->
-                    <circle cx="280" cy="200" r="25" fill="none" stroke="rgba(110, 197, 184, 0.15)" stroke-width="2">
-                        <animate attributeName="r" values="25;35;25" dur="2s" repeatCount="indefinite"/>
-                        <animate attributeName="stroke-opacity" values="0.15;0.05;0.15" dur="2s" repeatCount="indefinite"/>
+                    <circle cx="280" cy="200" r="22" fill="none" stroke="rgba(110, 197, 184, 0.12)" stroke-width="2">
+                        <animate attributeName="r" values="22;30;22" dur="2.5s" repeatCount="indefinite"/>
+                        <animate attributeName="stroke-opacity" values="0.12;0.04;0.12" dur="2.5s" repeatCount="indefinite"/>
                     </circle>
                 </g>
             </svg>
@@ -1724,7 +1953,7 @@
     <script>
         // index.html - JavaScript
         // By Nic Weyand!
-        // Ember particle animation and interactive elements for Argand landing page
+        // Polished ember particles and refined interactions for Argand landing page
 
         (function() {
             'use strict';
@@ -1744,22 +1973,20 @@
                 }
             }
 
-            // Check for reduced motion preference
             var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            // Apply low-bandwidth mode
             if (isSlowConnection || prefersReducedMotion) {
                 document.body.classList.add('low-bandwidth');
             }
 
             // ═══════════════════════════════════════════════════════════════════════
-            // EMBER PARTICLE ANIMATION (skip if slow connection)
+            // EMBER PARTICLE ANIMATION - Refined, more organic
             // ═══════════════════════════════════════════════════════════════════════
             if (!isSlowConnection && !prefersReducedMotion) {
                 var canvas = document.getElementById('ember-canvas');
                 var ctx = canvas.getContext('2d');
                 var embers = [];
-                var emberCount = 45;
+                var emberCount = 40;
 
                 function resizeCanvas() {
                     canvas.width = window.innerWidth;
@@ -1771,21 +1998,22 @@
                         { r: 255, g: 107, b: 53 },
                         { r: 255, g: 140, b: 66 },
                         { r: 233, g: 116, b: 81 },
-                        { r: 255, g: 179, b: 71 },
-                        { r: 255, g: 200, b: 100 }
+                        { r: 255, g: 170, b: 80 },
+                        { r: 255, g: 190, b: 100 }
                     ];
                     var color = colors[Math.floor(Math.random() * colors.length)];
 
                     return {
                         x: Math.random() * canvas.width,
-                        y: canvas.height + Math.random() * 50,
-                        vx: (Math.random() - 0.5) * 0.5,
-                        vy: -(Math.random() * 1.8 + 0.6),
-                        size: Math.random() * 3 + 1,
-                        opacity: Math.random() * 0.65 + 0.25,
-                        glowSize: Math.random() * 10 + 5,
+                        y: canvas.height + Math.random() * 80,
+                        vx: (Math.random() - 0.5) * 0.4,
+                        vy: -(Math.random() * 1.5 + 0.5),
+                        size: Math.random() * 2.5 + 0.8,
+                        opacity: Math.random() * 0.55 + 0.2,
+                        glowSize: Math.random() * 8 + 4,
                         color: color,
-                        flicker: Math.random() * Math.PI * 2
+                        flicker: Math.random() * Math.PI * 2,
+                        flickerSpeed: 0.04 + Math.random() * 0.04
                     };
                 }
 
@@ -1803,13 +2031,13 @@
                         var ember = embers[i];
                         ember.x += ember.vx;
                         ember.y += ember.vy;
-                        ember.opacity -= 0.0018;
-                        ember.flicker += 0.08;
+                        ember.opacity -= 0.0015;
+                        ember.flicker += ember.flickerSpeed;
 
-                        ember.vx += (Math.random() - 0.5) * 0.025;
-                        ember.vx = Math.max(-0.6, Math.min(0.6, ember.vx));
+                        ember.vx += (Math.random() - 0.5) * 0.02;
+                        ember.vx = Math.max(-0.5, Math.min(0.5, ember.vx));
 
-                        if (ember.y < -25 || ember.opacity <= 0) {
+                        if (ember.y < -30 || ember.opacity <= 0) {
                             embers[i] = createEmber();
                         }
                     }
@@ -1820,13 +2048,13 @@
 
                     for (var i = 0; i < embers.length; i++) {
                         var ember = embers[i];
-                        var flickerOpacity = ember.opacity * (0.8 + Math.sin(ember.flicker) * 0.2);
+                        var flickerOpacity = ember.opacity * (0.75 + Math.sin(ember.flicker) * 0.25);
 
                         var gradient = ctx.createRadialGradient(
                             ember.x, ember.y, 0,
                             ember.x, ember.y, ember.glowSize
                         );
-                        gradient.addColorStop(0, 'rgba(' + ember.color.r + ',' + ember.color.g + ',' + ember.color.b + ',' + (flickerOpacity * 0.45) + ')');
+                        gradient.addColorStop(0, 'rgba(' + ember.color.r + ',' + ember.color.g + ',' + ember.color.b + ',' + (flickerOpacity * 0.4) + ')');
                         gradient.addColorStop(1, 'rgba(' + ember.color.r + ',' + ember.color.g + ',' + ember.color.b + ', 0)');
 
                         ctx.fillStyle = gradient;
@@ -1834,7 +2062,7 @@
                         ctx.arc(ember.x, ember.y, ember.glowSize, 0, Math.PI * 2);
                         ctx.fill();
 
-                        ctx.fillStyle = 'rgba(255, 235, 210, ' + flickerOpacity + ')';
+                        ctx.fillStyle = 'rgba(255, 240, 215, ' + flickerOpacity + ')';
                         ctx.beginPath();
                         ctx.arc(ember.x, ember.y, ember.size, 0, Math.PI * 2);
                         ctx.fill();
@@ -1858,10 +2086,63 @@
             }
 
             // ═══════════════════════════════════════════════════════════════════════
-            // SERVICE CARDS - Fixed accordion (only ONE opens at a time)
+            // "What's an Argand?" TOOLTIP - On-demand with proper pointing
+            // ═══════════════════════════════════════════════════════════════════════
+            var argandTrigger = document.getElementById('argandTrigger');
+            var argandTooltip = document.getElementById('argandTooltip');
+            var argandClose = document.getElementById('argandClose');
+
+            if (argandTrigger && argandTooltip && argandClose) {
+                function toggleTooltip() {
+                    var isVisible = argandTooltip.classList.contains('visible');
+                    if (isVisible) {
+                        argandTooltip.classList.remove('visible');
+                        argandTrigger.classList.remove('active');
+                        argandTrigger.setAttribute('aria-expanded', 'false');
+                    } else {
+                        argandTooltip.classList.add('visible');
+                        argandTrigger.classList.add('active');
+                        argandTrigger.setAttribute('aria-expanded', 'true');
+                    }
+                }
+
+                function closeTooltip() {
+                    argandTooltip.classList.remove('visible');
+                    argandTrigger.classList.remove('active');
+                    argandTrigger.setAttribute('aria-expanded', 'false');
+                }
+
+                argandTrigger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleTooltip();
+                });
+
+                argandClose.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeTooltip();
+                });
+
+                // Close on outside click
+                document.addEventListener('click', function(e) {
+                    if (!argandTooltip.contains(e.target) && !argandTrigger.contains(e.target)) {
+                        closeTooltip();
+                    }
+                });
+
+                // Close on Escape
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        closeTooltip();
+                    }
+                });
+            }
+
+            // ═══════════════════════════════════════════════════════════════════════
+            // SERVICE CARDS - Refined accordion
             // ═══════════════════════════════════════════════════════════════════════
             var serviceHeaders = document.querySelectorAll('.service-card .service-header');
-            var currentOpenCard = null;
 
             function closeAllCards() {
                 var allCards = document.querySelectorAll('.service-card');
@@ -1869,7 +2150,6 @@
                     allCards[i].classList.remove('expanded');
                     var header = allCards[i].querySelector('.service-header');
                     if (header) header.setAttribute('aria-expanded', 'false');
-                    // Clear feature definitions
                     var defs = allCards[i].querySelectorAll('.feature-definition');
                     for (var j = 0; j < defs.length; j++) {
                         defs[j].classList.remove('visible');
@@ -1879,7 +2159,6 @@
                         tags[k].classList.remove('active');
                     }
                 }
-                currentOpenCard = null;
             }
 
             function toggleCard(card) {
@@ -1891,7 +2170,6 @@
                 if (!isOpen) {
                     card.classList.add('expanded');
                     header.setAttribute('aria-expanded', 'true');
-                    currentOpenCard = card;
                 }
             }
 
@@ -1933,7 +2211,6 @@
                         if (def && card) {
                             var isShowing = def.classList.contains('visible');
 
-                            // Hide all definitions in this card
                             var allDefs = card.querySelectorAll('.feature-definition');
                             for (var j = 0; j < allDefs.length; j++) {
                                 allDefs[j].classList.remove('visible');
@@ -1953,26 +2230,21 @@
             }
 
             // ═══════════════════════════════════════════════════════════════════════
-            // TECH ITEMS - Accordion behavior (only ONE opens at a time)
+            // TECH ITEMS - Accordion
             // ═══════════════════════════════════════════════════════════════════════
             var techItems = document.querySelectorAll('.tech-item');
-            var currentOpenTech = null;
 
             function closeAllTechItems() {
                 for (var i = 0; i < techItems.length; i++) {
                     techItems[i].classList.remove('expanded');
                 }
-                currentOpenTech = null;
             }
 
             function toggleTechItem(item) {
                 var isOpen = item.classList.contains('expanded');
-
                 closeAllTechItems();
-
                 if (!isOpen) {
                     item.classList.add('expanded');
-                    currentOpenTech = item;
                 }
             }
 
@@ -2007,7 +2279,7 @@
                     notifySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     setTimeout(function() {
                         emailInput.focus();
-                    }, 600);
+                    }, 650);
                 });
             }
 
@@ -2026,13 +2298,11 @@
                     var email = emailInput.value.trim();
                     if (!email) return;
 
-                    // Loading state
                     form.classList.add('loading');
                     btn.disabled = true;
                     if (successMsg) successMsg.classList.remove('visible');
                     if (errorMsg) errorMsg.classList.remove('visible');
 
-                    // Submit to Formspree
                     fetch(form.action, {
                         method: 'POST',
                         body: new FormData(form),
@@ -2042,7 +2312,7 @@
                         form.classList.remove('loading');
                         if (response.ok) {
                             btn.textContent = 'Done!';
-                            btn.style.background = '#6EC5B8';
+                            btn.style.background = 'linear-gradient(135deg, #6EC5B8 0%, #5AB3A6 100%)';
                             emailInput.value = '';
                             emailInput.disabled = true;
                             if (successMsg) successMsg.classList.add('visible');
